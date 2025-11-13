@@ -55,7 +55,7 @@ Route::middleware(['auth', 'verified'])
 Route::middleware(['auth', 'verified'])
     ->prefix('member')
     ->group(function () {
-        Route::get('dashboard', [MemberController::class, 'index'])->name('operator.dashboard');
+        Route::get('dashboard', [MemberController::class, 'index'])->name('member.dashboard');
         });
 
 require __DIR__ . '/settings.php';

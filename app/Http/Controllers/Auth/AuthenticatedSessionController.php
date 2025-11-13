@@ -19,11 +19,9 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(Request $request): Response
     {
-        $data['profil'] = Profil_sekolah::first();
         return Inertia::render('auth/login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => $request->session()->get('status'),
-            'profil' => $data['profil'],
         ]);
     }
 
@@ -38,8 +36,8 @@ class AuthenticatedSessionController extends Controller
         if ($user->role === 'admin') {
             return redirect()->route('admin.dashboard')
                 ->with('success', 'Login berhasil! Selamat datang Administrator.');
-        } elseif ($user->role === 'operator') {
-            return redirect()->route('operator.dashboard')
+        } elseif ($user->role === 'member') {
+            return redirect()->route('member.dashboard')
                 ->with('success', 'Login berhasil! Selamat datang Operator.');
         }
 
