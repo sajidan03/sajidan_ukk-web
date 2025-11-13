@@ -43,11 +43,11 @@ Route::middleware(['auth', 'verified'])
         Route::delete('user/hapus/{id}', [UserController::class, 'hapusUser'])->name('userHapus');
         //kelola-toko
         Route::get('/toko', [TokoController::class, 'index'])->name('admin.toko.index');
-        Route::get('/toko/tambah', [TokoController::class, 'create'])->name('admin.toko.create');
-        Route::post('/toko/tambah', [TokoController::class, 'store'])->name('admin.toko.store');
+        Route::get('/toko/tambah', [TokoController::class, 'simpanView'])->name('admin.toko.create');
+        Route::post('/toko/tambah', [TokoController::class, 'simpan'])->name('admin.toko.store');
         Route::get('/toko/{id}', [TokoController::class, 'show'])->name('admin.toko.show');
-        Route::get('/toko/edit/{id}', [TokoController::class, 'edit'])->name('admin.toko.edit');
-        Route::put('/toko/edit/{id}', [TokoController::class, 'update'])->name('admin.toko.update');
+        Route::get('/toko/edit/{id}', [TokoController::class, 'editView'])->name('admin.toko.edit');
+        Route::put('/toko/edit/{id}', [TokoController::class, 'edit'])->name('admin.toko.update');
         Route::delete('/toko/hapus/{id}', [TokoController::class, 'destroy'])->name('admin.toko.destroy');
         Route::get('/toko/export', [TokoController::class, 'export'])->name('admin.toko.export');
     });

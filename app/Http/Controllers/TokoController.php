@@ -25,7 +25,7 @@ class TokoController extends Controller
                     'encrypted_id' => encrypt($item->id),
                     'nama_toko' => $item->nama_toko,
                     'deskripsi' => $item->deskripsi,
-                    'gambar' => $item->gambar ? '/storage/assets/' . $item->gambar : null,
+                    'gambar' => $item->gambar ? '/storage/assets/toko/' . $item->gambar : null,
                     'id_user' => $item->id_user,
                     'kontak_toko' => $item->kontak_toko,
                     'alamat' => $item->alamat,
@@ -40,27 +40,21 @@ class TokoController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function simpanView()
     {
-        $users = User::where('role', '!=', )->get(['id', 'nama', 'username']);
+        $users = User::whereIn('role', ['admin', 'member'])->get(['id', 'nama', 'username']);
 
         return inertia('Admin/Toko/tambah', [
             'users' => $users
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function simpan(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'nama_toko' => 'required|string|max:255',
             'deskripsi' => 'required|string',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'id_user' => 'required|exists:users,id',
             'kontak_toko' => 'required|string|max:20',
             'alamat' => 'required|string',
@@ -73,15 +67,19 @@ class TokoController extends Controller
         }
 
         try {
-            $gambarPath = null;
+            $gambarName = null;
             if ($request->hasFile('gambar')) {
-                $gambarPath = $request->file('gambar')->store('toko', 'public');
+                $file = $request->file('gambar');
+                $gambarName = 'toko_' . time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
+
+                // Simpan file ke storage/assets/toko
+                $file->move(public_path('storage/assets/toko'), $gambarName);
             }
 
             Toko::create([
                 'nama_toko' => $request->nama_toko,
                 'deskripsi' => $request->deskripsi,
-                'gambar' => $gambarPath,
+                'gambar' => $gambarName,
                 'id_user' => $request->id_user,
                 'kontak_toko' => $request->kontak_toko,
                 'alamat' => $request->alamat,
@@ -96,22 +94,19 @@ class TokoController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         try {
             $toko = Toko::with('user')->findOrFail(decrypt($id));
 
-            return inertia('Admin/Toko/index', [
+            return inertia('Admin/Toko/show', [
                 'toko' => [
                     'id' => $toko->id,
                     'encrypted_id' => encrypt($toko->id),
                     'nama_toko' => $toko->nama_toko,
                     'deskripsi' => $toko->deskripsi,
-                    'gambar' => $toko->gambar ? Storage::url($toko->gambar) : null,
-                    'id_user' => $toko->id,
+                    'gambar' => $toko->gambar ? '/storage/assets/toko/' . $toko->gambar : null,
+                    'id_user' => $toko->id_user, // Diperbaiki dari $toko->id
                     'kontak_toko' => $toko->kontak_toko,
                     'alamat' => $toko->alamat,
                     'created_at' => $toko->created_at->format('Y-m-d H:i:s'),
@@ -128,22 +123,19 @@ class TokoController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
+    public function editView($id)
     {
         try {
             $toko = Toko::findOrFail(decrypt($id));
-            $users = User::where('role', '!=', 'siswa')->get(['id', 'nama', 'username']);
+            $users = User::whereIn('role', ['admin', 'member'])->get(['id', 'nama', 'username']);
 
-            return inertia('Admin/Toko/Edit', [
+            return inertia('Admin/Toko/edit', [
                 'toko' => [
                     'id' => $toko->id,
                     'encrypted_id' => encrypt($toko->id),
                     'nama_toko' => $toko->nama_toko,
                     'deskripsi' => $toko->deskripsi,
-                    'gambar' => $toko->gambar ? Storage::url($toko->gambar) : null,
+                    'gambar' => $toko->gambar ? '/storage/assets/toko/' . $toko->gambar : null,
                     'id_user' => $toko->id_user,
                     'kontak_toko' => $toko->kontak_toko,
                     'alamat' => $toko->alamat,
@@ -156,15 +148,12 @@ class TokoController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
+    public function edit(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
             'nama_toko' => 'required|string|max:255',
             'deskripsi' => 'required|string',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'id_user' => 'required|exists:users,id',
             'kontak_toko' => 'required|string|max:20',
             'alamat' => 'required|string',
@@ -179,19 +168,24 @@ class TokoController extends Controller
         try {
             $toko = Toko::findOrFail(decrypt($id));
 
-            $gambarPath = $toko->gambar;
+            $gambarName = $toko->gambar;
             if ($request->hasFile('gambar')) {
                 // Hapus gambar lama jika ada
-                if ($toko->gambar) {
-                    Storage::disk('public')->delete($toko->gambar);
+                if ($toko->gambar && file_exists(public_path('storage/assets/toko/' . $toko->gambar))) {
+                    unlink(public_path('storage/assets/toko/' . $toko->gambar));
                 }
-                $gambarPath = $request->file('gambar')->store('toko', 'public');
+
+                $file = $request->file('gambar');
+                $gambarName = 'toko_' . time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
+
+                // Simpan file ke storage/assets/toko
+                $file->move(public_path('storage/assets/toko'), $gambarName);
             }
 
             $toko->update([
                 'nama_toko' => $request->nama_toko,
                 'deskripsi' => $request->deskripsi,
-                'gambar' => $gambarPath,
+                'gambar' => $gambarName,
                 'id_user' => $request->id_user,
                 'kontak_toko' => $request->kontak_toko,
                 'alamat' => $request->alamat,
@@ -206,17 +200,14 @@ class TokoController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         try {
             $toko = Toko::findOrFail(decrypt($id));
 
             // Hapus gambar jika ada
-            if ($toko->gambar) {
-                Storage::disk('public')->delete($toko->gambar);
+            if ($toko->gambar && file_exists(public_path('storage/assets/toko/' . $toko->gambar))) {
+                unlink(public_path('storage/assets/toko/' . $toko->gambar));
             }
 
             $toko->delete();
@@ -229,9 +220,6 @@ class TokoController extends Controller
         }
     }
 
-    /**
-     * Export data toko
-     */
     public function export()
     {
         $toko = Toko::with('user')->latest()->get();
