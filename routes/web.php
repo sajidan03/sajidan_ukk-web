@@ -22,6 +22,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\FaxController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\TokoController;
 use App\Models\Ekstrakulikuler;
 use Illuminate\Support\Facades\Route;
@@ -56,6 +57,8 @@ Route::middleware(['auth', 'verified'])
     ->prefix('member')
     ->group(function () {
         Route::get('dashboard', [MemberController::class, 'index'])->name('member.dashboard');
+        //kelola-produk
+        Route::get('produk', [ProdukController::class, 'index'])->name('memberProdukView');
         });
 
 require __DIR__ . '/settings.php';

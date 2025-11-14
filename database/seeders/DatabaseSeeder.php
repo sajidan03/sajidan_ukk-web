@@ -27,12 +27,12 @@ class DatabaseSeeder extends Seeder
                 'role' => 'admin',
             ]
         );
-         User::create(
+        User::create(
             [
                 'nama' => 'Supri',
                 'username' => 'supri',
                 'password' => bcrypt('supri'),
-                'role' => 'admin',
+                'role' => 'member',
             ]
         );
         Toko::create(

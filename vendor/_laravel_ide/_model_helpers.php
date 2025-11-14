@@ -643,6 +643,8 @@ namespace App\Models {
      * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\GambarProduk> $gambarProduk
      * @property-read int|null $gambarProduk_count
+     * @property-read \App\Models\Kategori $kategori
+     * @property-read \App\Models\Toko $toko
      * @method static \Illuminate\Database\Eloquent\Builder<Produk>|Produk whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Produk>|Produk whereIdKategori($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Produk>|Produk whereNamaProduk($value)

@@ -189,7 +189,7 @@ class TokoController extends Controller
         $toko->update([
             'nama_toko' => $request->nama_toko,
             'deskripsi' => $request->deskripsi,
-            'gambar' => $gambarName, // Hanya nama file
+            'gambar' => $gambarName, 
             'id_user' => $request->id_user,
             'kontak_toko' => $request->kontak_toko,
             'alamat' => $request->alamat,
