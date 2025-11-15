@@ -55,7 +55,6 @@ class TokoSayaController extends Controller
         }
     }
 
-    // EDIT TOKO - TAMPILAN
     public function editView($id)
     {
         $id = Crypt::encrypt($id);

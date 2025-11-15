@@ -56,7 +56,7 @@ export default function KelolaToko() {
 
               <div className="flex gap-3 mt-4 lg:mt-0">
                 <Link
-                  href="/member/toko/edit"
+                  href="/member/toko/edit/{id.encrypted_id}"
                   className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200 flex items-center gap-2"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
