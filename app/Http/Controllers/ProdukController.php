@@ -76,7 +76,7 @@ class ProdukController extends Controller
             }
 
             foreach ($produk->gambarProduk as $gambar) {
-                $filePath = storage_path('app/assets/produk/' . $gambar->nama_gambar);
+                $filePath = storage_path('storage/assets/produk/' . $gambar->nama_gambar);
                 if (file_exists($filePath)) {
                     unlink($filePath);
                 }
@@ -190,7 +190,7 @@ class ProdukController extends Controller
                     return [
                         'id' => $gambar->id,
                         'nama_gambar' => $gambar->nama_gambar,
-                        'url' => Storage::url('assets/produk/' . $gambar->nama_gambar) // Add URL for frontend
+                        'url' => Storage::url('assets/produk/' . $gambar->nama_gambar)
                     ];
                 })->toArray(),
             ];
@@ -212,7 +212,6 @@ class ProdukController extends Controller
         try {
             $decryptedId = decrypt($id);
             $produk = Produk::findOrFail($decryptedId);
-
             $userToko = Toko::where('id_user', Auth::id())->first();
 
             if ($produk->id_toko != $userToko->id) {
@@ -231,7 +230,6 @@ class ProdukController extends Controller
                 'deleted_images' => 'nullable|array',
             ]);
 
-            // Update produk data
             $produk->update([
                 'id_kategori' => $request->id_kategori,
                 'nama_produk' => $request->nama_produk,
@@ -241,30 +239,23 @@ class ProdukController extends Controller
                 'url_wa' => $request->url_wa,
             ]);
 
-            // Handle deleted images
             if ($request->has('deleted_images') && !empty($request->deleted_images)) {
                 foreach ($request->deleted_images as $deletedImage) {
-                    // Extract filename from URL or use directly
                     $filename = basename($deletedImage);
 
-                    // Find and delete the image record
                     $gambar = GambarProduk::where('id_produk', $produk->id)
                         ->where('nama_gambar', $filename)
                         ->first();
 
                     if ($gambar) {
-                        // Delete physical file
-                        $filePath = storage_path('app/assets/produk/' . $gambar->nama_gambar);
+                        $filePath = storage_path('storage/assets/produk/' . $gambar->nama_gambar);
                         if (file_exists($filePath)) {
                             unlink($filePath);
                         }
-                        // Delete database record
                         $gambar->delete();
                     }
                 }
             }
-
-            // Handle new images
             if ($request->hasFile('gambar_produk')) {
                 foreach ($request->file('gambar_produk') as $gambar) {
                     $fileName = time() . '_' . uniqid() . '.' . $gambar->getClientOriginalExtension();

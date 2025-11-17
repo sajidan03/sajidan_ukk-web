@@ -12,7 +12,10 @@ import {
     LogOut,
     ShoppingCart,
     LayoutDashboard,
-    ShoppingBagIcon
+    ShoppingBagIcon,
+    Type,
+    TypeIcon,
+    ChartArea
 } from 'lucide-react';
 import AppLogo from './app-logo';
 
@@ -31,6 +34,11 @@ const adminNavItems: NavItem[] = [
         title: 'Toko',
         href: '/admin/toko',
         icon: ShoppingCart,
+    },
+    {
+        title: 'Kategori produk',
+        href: '/admin/kategori',
+        icon: ChartArea
     },
 
 ];

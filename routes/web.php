@@ -1,31 +1,14 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\BeritaController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\EkskulController;
-use App\Http\Controllers\GaleriController;
-use App\Http\Controllers\GuruController;
-use App\Http\Controllers\OperatorBerita;
-use App\Http\Controllers\OperatorController;
-use App\Http\Controllers\OperatorEskul;
-use App\Http\Controllers\OperatorGaleri;
-use App\Http\Controllers\OperatorMapel;
-use App\Http\Controllers\OperatorGuru;
-use App\Http\Controllers\OperatorProfilSekolah;
-use App\Http\Controllers\OperatorSiswa;
-use App\Http\Controllers\ProfilSekolahController;
-use App\Http\Controllers\MapelController;
-use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
-use App\Http\Controllers\FaxController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MemberController;
-use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\TokoController;
 use App\Http\Controllers\TokoSayaController;
-use App\Models\Ekstrakulikuler;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
@@ -68,9 +51,9 @@ Route::middleware(['auth', 'verified'])
         //kelola-toko
         Route::get('toko', [TokoSayaController::class, 'index'])->name('member.toko.index');
         Route::get('toko/edit/{id}', [TokoSayaController::class, 'editView'])->name('memberTokoSaya');
+        Route::post('toko/edit/{id}', [TokoSayaController::class, 'edit'])->name('member.toko.edit');
         Route::delete('toko/hapus/{id}', [TokoSayaController::class, 'destroy'])->name('member.toko.hapus');
         Route::get('toko/buat', [TokoSayaController::class, 'create'])->name('member.toko.buat');
-        Route::get('toko/edit', [TokoSayaController::class, 'edit'])->name('member.toko.edit');
         });
 
 require __DIR__ . '/settings.php';

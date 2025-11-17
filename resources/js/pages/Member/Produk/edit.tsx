@@ -36,6 +36,7 @@ interface GambarProduk {
 
 interface Produk {
   id: number
+  encrypted_id: string
   id_kategori: number
   nama_produk: string
   harga: number
@@ -44,7 +45,6 @@ interface Produk {
   url_wa: string
   gambar_produk: GambarProduk[]
 }
-
 export default function EditProduk() {
   const { props } = usePage()
   const kategori = props.kategori as Kategori[]
@@ -54,7 +54,8 @@ export default function EditProduk() {
   const [previewImages, setPreviewImages] = useState<{url: string, type: 'existing' | 'new', file?: File}[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const { data, setData, put, processing, errors } = useForm({
+  const { data, setData, post, processing, errors } = useForm({
+    encrypted_id: produk.encrypted_id,
     id_kategori: produk.id_kategori.toString(),
     nama_produk: produk.nama_produk,
     harga: produk.harga.toString(),
@@ -66,9 +67,7 @@ export default function EditProduk() {
   })
 
   const currentBreadcrumbs = breadcrumbs({ productName: produk.nama_produk })
-
   useEffect(() => {
-    // Set existing images as preview when component mounts
     const existingPreviews = produk.gambar_produk.map(img => ({
       url: img.url,
       type: 'existing' as const
@@ -78,7 +77,7 @@ export default function EditProduk() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    put(`/member/produk/${produk.id}/edit`)
+    post(`/member/produk/edit/${produk.id}`)
   }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -109,7 +108,6 @@ export default function EditProduk() {
     const imageToRemove = previewImages[index]
 
     if (imageToRemove.type === 'new') {
-      // New image - remove from preview and files
       const newPreviews = previewImages.filter((_, i) => i !== index)
       const fileIndex = previewImages.slice(0, index).filter(img => img.type === 'new').length
       const newFiles = data.gambar_produk.filter((_, i) => i !== fileIndex)
@@ -118,7 +116,6 @@ export default function EditProduk() {
       setPreviewImages(newPreviews)
       URL.revokeObjectURL(imageToRemove.url)
     } else {
-      // Existing image - mark for deletion
       const newPreviews = previewImages.filter((_, i) => i !== index)
       setPreviewImages(newPreviews)
       setData('deleted_images', [...data.deleted_images, imageToRemove.url])
@@ -129,13 +126,11 @@ export default function EditProduk() {
     fileInputRef.current?.click()
   }
 
-  // Calculate total images count
   const totalImages = previewImages.length
 
   return (
     <AppLayout breadcrumbs={currentBreadcrumbs}>
       <Head title={`Edit ${produk.nama_produk}`} />
-
       <div className="min-h-screen bg-gray-50 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
@@ -144,7 +139,7 @@ export default function EditProduk() {
               <div>
                 <h1 className="text-3xl font-bold text-gray-900">Edit Produk</h1>
                 <p className="mt-2 text-gray-600">
-                  Edit produk di toko <strong>{toko.nama_toko}</strong>
+                  Edit produk di toko <strong>{toko.nama_toko}, {produk.encrypted_id}</strong>
                 </p>
               </div>
               <Link

@@ -64,7 +64,7 @@ export default function Dashboard() {
               <tr>
                 <th className="px-4 py-3 text-left">No</th>
                 <th className="px-4 py-3 text-left">Nama</th>
-                <th className="px-4 py-3 text-left">Email</th>
+                <th className="px-4 py-3 text-left">Username</th>
                 <th className="px-4 py-3 text-left">Role</th>
                 <th className="px-4 py-3 text-left">Dibuat</th>
                 <th className="px-4 py-3 text-center">Aksi</th>
