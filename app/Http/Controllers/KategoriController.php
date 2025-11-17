@@ -21,7 +21,7 @@ class KategoriController extends Controller
                 ];
             });
 
-            return inertia('Admin/Kategori/Index', [
+            return inertia('Admin/Kategori/index', [
                 'kategoris' => $kategoris,
             ]);
 
@@ -30,12 +30,12 @@ class KategoriController extends Controller
         }
     }
 
-    public function create()
+    public function tambahView()
     {
         return inertia('Admin/Kategori/tambah');
     }
 
-    public function store(Request $request)
+    public function tambah(Request $request)
     {
         try {
             $request->validate([
@@ -46,20 +46,20 @@ class KategoriController extends Controller
                 'nama_kategori' => $request->nama_kategori,
             ]);
 
-            return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil ditambahkan.');
+            return redirect()->route('adminKategoriView')->with('success', 'Kategori berhasil ditambahkan.');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menambahkan kategori: ' . $e->getMessage());
         }
     }
 
-    public function edit($id)
+    public function editView($id)
     {
         try {
             $decryptedId = Crypt::decrypt($id);
             $kategori = Kategori::findOrFail($decryptedId);
 
-            return inertia('Admin/Kategori/Edit', [
+            return inertia('Admin/Kategori/edit', [
                 'kategori' => [
                     'id' => $kategori->id,
                     'nama_kategori' => $kategori->nama_kategori,
@@ -68,11 +68,11 @@ class KategoriController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            return redirect()->route('admin.kategori.index')->with('error', 'Kategori tidak ditemukan.');
+            return redirect()->route('adminKategoriView')->with('error', 'Kategori tidak ditemukan.');
         }
     }
 
-    public function update(Request $request, $id)
+    public function edit(Request $request, $id)
     {
         try {
             $decryptedId = Crypt::decrypt($id);
@@ -86,7 +86,7 @@ class KategoriController extends Controller
                 'nama_kategori' => $request->nama_kategori,
             ]);
 
-            return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil diperbarui.');
+            return redirect()->route('adminKategoriView')->with('success', 'Kategori berhasil diperbarui.');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal memperbarui kategori: ' . $e->getMessage());
@@ -99,14 +99,13 @@ class KategoriController extends Controller
             $decryptedId = Crypt::decrypt($id);
             $kategori = Kategori::findOrFail($decryptedId);
 
-            // Cek apakah kategori digunakan oleh produk
             if ($kategori->produk()->exists()) {
                 return redirect()->back()->with('error', 'Tidak dapat menghapus kategori karena masih digunakan oleh produk.');
             }
 
             $kategori->delete();
 
-            return redirect()->route('admin.kategori.index')->with('success', 'Kategori berhasil dihapus.');
+            return redirect()->route('adminKategoriView')->with('success', 'Kategori berhasil dihapus.');
 
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Gagal menghapus kategori: ' . $e->getMessage());

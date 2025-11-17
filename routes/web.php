@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
@@ -35,6 +36,13 @@ Route::middleware(['auth', 'verified'])
         Route::put('toko/edit/{id}', [TokoController::class, 'edit'])->name('admin.toko.update');
         Route::delete('toko/hapus/{id}', [TokoController::class, 'destroy'])->name('admin.toko.destroy');
         Route::get('toko/export', [TokoController::class, 'export'])->name('admin.toko.export');
+        //kelola-kategori
+        Route::get('kategori', [KategoriController::class, 'index'])->name('adminKategoriView');
+        Route::get('kategori/tambah', [KategoriController::class, 'tambahView']);
+        Route::post('kategori/tambah', [KategoriController::class, 'tambah']);
+        Route::delete('kategori/hapus/{encrypted_id}', [KategoriController::class, 'destroy']);
+        Route::get('kategori/edit/{id}', [KategoriController::class, 'editView']);
+        Route::post('kategori/edit/{id}', [KategoriController::class, 'edit']);
     });
 
 Route::middleware(['auth', 'verified'])
@@ -54,6 +62,7 @@ Route::middleware(['auth', 'verified'])
         Route::post('toko/edit/{id}', [TokoSayaController::class, 'edit'])->name('member.toko.edit');
         Route::delete('toko/hapus/{id}', [TokoSayaController::class, 'destroy'])->name('member.toko.hapus');
         Route::get('toko/buat', [TokoSayaController::class, 'create'])->name('member.toko.buat');
+
         });
 
 require __DIR__ . '/settings.php';

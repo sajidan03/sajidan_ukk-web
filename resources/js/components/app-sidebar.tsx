@@ -1,6 +1,4 @@
-import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
-import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { dashboard, logout } from '@/routes';
 import { type NavItem } from '@/types';
@@ -13,8 +11,6 @@ import {
     ShoppingCart,
     LayoutDashboard,
     ShoppingBagIcon,
-    Type,
-    TypeIcon,
     ChartArea
 } from 'lucide-react';
 import AppLogo from './app-logo';
@@ -74,6 +70,7 @@ interface PageProps {
     auth: {
         user: User;
     };
+    [key:string] : unknown
 }
 
 export function AppSidebar() {
