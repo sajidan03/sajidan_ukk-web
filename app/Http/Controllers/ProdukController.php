@@ -28,6 +28,8 @@ class ProdukController extends Controller
             ->latest()
             ->get()
             ->map(function ($item) {
+                $gambarProduk = $item->gambarProduk->sortBy('id')->values();
+
                 return [
                     'id' => $item->id,
                     'encrypted_id' => encrypt($item->id),
@@ -41,7 +43,7 @@ class ProdukController extends Controller
                     'id_toko' => $item->id_toko,
                     'created_at' => $item->created_at,
                     'updated_at' => $item->updated_at,
-                    'gambar_produk' => $item->gambarProduk->map(function ($gambar) {
+                    'gambar_produk' => $gambarProduk->map(function ($gambar) {
                         return [
                             'id' => $gambar->id,
                             'id_produk' => $gambar->id_produk,
@@ -76,14 +78,13 @@ class ProdukController extends Controller
             }
 
             foreach ($produk->gambarProduk as $gambar) {
-                $filePath = storage_path('storage/assets/produk/' . $gambar->nama_gambar);
+                $filePath = storage_path('/storage/assets/produk/' . $gambar->nama_gambar);
                 if (file_exists($filePath)) {
                     unlink($filePath);
                 }
             }
 
             $produk->gambarProduk()->delete();
-
             $produk->delete();
 
             return redirect()->back()->with('success', 'Produk berhasil dihapus.');
@@ -143,21 +144,18 @@ class ProdukController extends Controller
                 foreach ($request->file('gambar_produk') as $gambar) {
                     $fileName = time() . '_' . uniqid() . '.' . $gambar->getClientOriginalExtension();
 
-                    $gambar->storeAs('assets/produk', $fileName);
+                    $gambar->storeAs('/storage/assets/produk/', $fileName);
 
                     GambarProduk::create([
                         'id_produk' => $produk->id,
                         'nama_gambar' => $fileName
-                        // 'nama_gambar' => 'logo.png
                     ]);
                 }
             }
 
             return redirect()->route('memberProdukView')->with('success', 'Produk berhasil ditambahkan.');
         } catch (Exception $e) {
-            dd($e->getMessage());
             return back()->with('error', 'Gagal menambahkan produk: ' . $e->getMessage());
-
         }
     }
 
@@ -177,6 +175,9 @@ class ProdukController extends Controller
 
             $kategori = Kategori::all();
 
+            // Urutkan gambar berdasarkan ID
+            $gambarProduk = $produk->gambarProduk->sortBy('id')->values();
+
             $produkData = [
                 'id' => $produk->id,
                 'encrypted_id' => encrypt($produk->id),
@@ -186,7 +187,7 @@ class ProdukController extends Controller
                 'stok' => $produk->stok,
                 'deskripsi' => $produk->deskripsi,
                 'url_wa' => $produk->url_wa,
-                'gambar_produk' => $produk->gambarProduk->map(function ($gambar) {
+                'gambar_produk' => $gambarProduk->map(function ($gambar) {
                     return [
                         'id' => $gambar->id,
                         'nama_gambar' => $gambar->nama_gambar,
@@ -256,6 +257,7 @@ class ProdukController extends Controller
                     }
                 }
             }
+
             if ($request->hasFile('gambar_produk')) {
                 foreach ($request->file('gambar_produk') as $gambar) {
                     $fileName = time() . '_' . uniqid() . '.' . $gambar->getClientOriginalExtension();
@@ -276,5 +278,4 @@ class ProdukController extends Controller
             return back()->with('error', 'Gagal memperbarui produk: ' . $e->getMessage());
         }
     }
-
 }

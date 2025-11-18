@@ -176,7 +176,7 @@ export default function TambahProduk() {
                       </label>
                       <div className="relative">
                         <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                          ₩
+                         Rp.
                         </span>
                         <input
                           type="number"
@@ -317,23 +317,6 @@ export default function TambahProduk() {
                     </div>
                   )}
 
-                  {/* Info Box */}
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <div className="flex items-start gap-3">
-                      <svg className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <div>
-                        <h4 className="text-sm font-medium text-blue-800">Tips Upload Gambar</h4>
-                        <ul className="text-xs text-blue-700 mt-1 space-y-1">
-                          <li>• Gunakan gambar dengan resolusi tinggi dan jelas</li>
-                          <li>• Gambar pertama akan menjadi gambar utama</li>
-                          <li>• Format yang didukung: JPG, PNG, JPEG</li>
-                          <li>• Ukuran maksimal per file: 2MB</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
 

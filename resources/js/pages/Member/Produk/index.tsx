@@ -74,13 +74,15 @@ export default function KelolaProduk() {
     })
   }
 
-  // Fungsi untuk mendapatkan gambar utama
   const getGambarUtama = (gambarProduk: GambarProduk[] | undefined) => {
     if (!gambarProduk || gambarProduk.length === 0) {
       return '/storage/assets/default-product.jpg'
     }
+
+    const sortedGambar = [...gambarProduk].sort((a, b) => a.id - b.id);
+
     // Ambil gambar pertama sebagai gambar utama
-    return `/storage/assets/produk/${gambarProduk[0].nama_gambar}`
+    return `/storage/assets/produk/${sortedGambar[0].nama_gambar}`
   }
 
   return (
@@ -218,8 +220,8 @@ export default function KelolaProduk() {
                     <td className="px-4 py-3 text-sm">
                       {formatDate(produkItem.tanggal_upload)}
                     </td>
-                       <td className="px-4 py-3 text-sm">
-                        {produkItem.url_wa }
+                    <td className="px-4 py-3 text-sm">
+                      {produkItem.url_wa || '-'}
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center justify-center gap-2">
@@ -247,7 +249,7 @@ export default function KelolaProduk() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={11} className="px-4 py-8 text-center text-gray-500">
+                  <td colSpan={12} className="px-4 py-8 text-center text-gray-500">
                     <div className="flex flex-col items-center justify-center">
                       <svg className="w-16 h-16 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
