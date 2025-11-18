@@ -99,7 +99,7 @@ export default function EditProduk() {
     })
 
     post(`/member/produk/edit/${produk.encrypted_id}`)
-
+  }
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
     if (!files) return
@@ -128,7 +128,6 @@ export default function EditProduk() {
     const imageToRemove = previewImages[index]
 
     if (imageToRemove.type === 'new') {
-      // Hapus gambar baru
       const newPreviews = previewImages.filter((_, i) => i !== index)
       const fileIndex = previewImages.slice(0, index).filter(img => img.type === 'new').length
       const newFiles = data.gambar_produk.filter((_, i) => i !== fileIndex)
@@ -137,7 +136,6 @@ export default function EditProduk() {
       setPreviewImages(newPreviews)
       URL.revokeObjectURL(imageToRemove.url)
     } else {
-      // Hapus gambar existing - simpan ID-nya
       const newPreviews = previewImages.filter((_, i) => i !== index)
       setPreviewImages(newPreviews)
 
@@ -446,5 +444,4 @@ export default function EditProduk() {
       </div>
     </AppLayout>
   )
-}}
-
+}

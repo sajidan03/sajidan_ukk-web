@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -78,7 +79,6 @@ class ProdukController extends Controller
             }
 
             foreach ($produk->gambarProduk as $gambar) {
-                // PATH YANG BENAR: storage/app/assets/produk/
                 $filePath = storage_path('app/assets/produk/' . $gambar->nama_gambar);
                 if (file_exists($filePath)) {
                     unlink($filePath);
@@ -145,7 +145,6 @@ class ProdukController extends Controller
                 foreach ($request->file('gambar_produk') as $gambar) {
                     $fileName = time() . '_' . uniqid() . '.' . $gambar->getClientOriginalExtension();
 
-                    // PATH YANG BENAR: 'assets/produk' (tanpa slash di depan)
                     $gambar->storeAs('assets/produk', $fileName);
 
                     GambarProduk::create([
@@ -157,7 +156,6 @@ class ProdukController extends Controller
 
             return redirect()->route('memberProdukView')->with('success', 'Produk berhasil ditambahkan.');
         } catch (Exception $e) {
-            // Debug untuk melihat error
             Log::error('Error saving product: ' . $e->getMessage());
             Log::error('Request data: ', $request->all());
             return back()->with('error', 'Gagal menambahkan produk: ' . $e->getMessage());
@@ -287,7 +285,7 @@ class ProdukController extends Controller
     public function edit(Request $request, $id)
 {
     try {
-        $decryptedId = decrypt($id);
+        $decryptedId = Crypt::decrypt($id);
         $produk = Produk::findOrFail($decryptedId);
         $userToko = Toko::where('id_user', Auth::id())->first();
 
@@ -307,7 +305,6 @@ class ProdukController extends Controller
             'deleted_images' => 'nullable|array',
         ]);
 
-        // Debug data yang diterima
         Log::info('Edit Product Request Data:', $request->all());
         Log::info('Deleted Images:', $request->deleted_images ?? []);
 
@@ -320,10 +317,8 @@ class ProdukController extends Controller
             'url_wa' => $request->url_wa,
         ]);
 
-        // Handle deleted images
         if ($request->has('deleted_images') && !empty($request->deleted_images)) {
             foreach ($request->deleted_images as $deletedImage) {
-                // Extract filename from URL
                 $filename = basename($deletedImage);
 
                 $gambar = GambarProduk::where('id_produk', $produk->id)
@@ -341,7 +336,6 @@ class ProdukController extends Controller
             }
         }
 
-        // Handle new images
         if ($request->hasFile('gambar_produk')) {
             foreach ($request->file('gambar_produk') as $gambar) {
                 $fileName = time() . '_' . uniqid() . '.' . $gambar->getClientOriginalExtension();
