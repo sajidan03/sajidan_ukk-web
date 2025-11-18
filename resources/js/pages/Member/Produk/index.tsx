@@ -79,6 +79,7 @@ export default function KelolaProduk() {
       return '/storage/assets/default-product.jpg'
     }
 
+    // Urutkan berdasarkan ID untuk konsistensi, ambil gambar pertama (ID terkecil)
     const sortedGambar = [...gambarProduk].sort((a, b) => a.id - b.id);
 
     // Ambil gambar pertama sebagai gambar utama
@@ -225,6 +226,19 @@ export default function KelolaProduk() {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center justify-center gap-2">
+                        {/* TOMBOL DETAIL GAMBAR */}
+                        <Link
+                          href={`/member/produk/detail/${produkItem.encrypted_id}`}
+                          className="px-3 py-1 bg-purple-600 text-white text-sm rounded-md hover:bg-purple-700 transition duration-200 flex items-center gap-1"
+                          title="Lihat Detail Gambar"
+                        >
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                          Detail Gambar
+                        </Link>
+
+                        {/* TOMBOL EDIT */}
                         <Link
                           href={`/member/produk/edit/${produkItem.encrypted_id}`}
                           className="px-3 py-1 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition duration-200 flex items-center gap-1"
@@ -234,6 +248,8 @@ export default function KelolaProduk() {
                           </svg>
                           Edit
                         </Link>
+
+                        {/* TOMBOL HAPUS */}
                         <button
                           onClick={() => handleDelete(produkItem.encrypted_id)}
                           className="px-3 py-1 bg-red-600 text-white text-sm rounded-md hover:bg-red-700 transition duration-200 flex items-center gap-1"

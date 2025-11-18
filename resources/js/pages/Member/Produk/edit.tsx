@@ -90,7 +90,6 @@ export default function EditProduk() {
     formData.append('deskripsi', data.deskripsi)
     formData.append('url_wa', data.url_wa)
 
-    // Append deleted images (ID gambar yang dihapus)
     data.deleted_images.forEach(id => {
       formData.append('deleted_images[]', id.toString())
     })
@@ -447,4 +446,5 @@ export default function EditProduk() {
       </div>
     </AppLayout>
   )
-}
+}}
+

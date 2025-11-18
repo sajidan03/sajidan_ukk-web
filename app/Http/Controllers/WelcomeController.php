@@ -2,28 +2,77 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Produk;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+use App\Models\Produk;
+use App\Models\Kategori;
+use App\Models\Toko;
 
 class WelcomeController extends Controller
 {
-    public function index(){
-        $data['popularFoods'] = Produk::with('gambarProduk')
+    public function index()
+    {
+        $popularFoods = Produk::with(['gambarProduk', 'kategori', 'toko'])
             ->where('stok', '>', 0)
-            ->limit(5)
-            ->get()
-            ->map(function ($produk) {
-                $gambar = $produk->gambarProduk->first();
+            ->orderBy('tanggal_upload', 'desc')
+            ->limit(8)
+            ->get();
 
-                return [
-                    'id' => $produk->id,
-                    'nama' => $produk->nama_produk,
-                    'harga' => '₩' . number_format($produk->harga, 0, ',', '.'),
-                    'img' => $gambar ? asset('storage/assets/' . $gambar->nama_gambar) : '/images/default-product.jpg'
-                ];
-            });
+        $categories = Kategori::all();
 
-        return Inertia::render('welcome', $data);
+        $stores = Toko::all();
+
+                return inertia('welcome', [
+
+            'popularFoods' => $popularFoods,
+            'categories' => $categories,
+            'stores' => $stores,
+        ]);
+    }
+
+    public function menu()
+    {
+        $products = Produk::with(['gambarProduk', 'kategori', 'toko'])
+            ->where('stok', '>', 0)
+            ->orderBy('nama_produk')
+            ->get();
+
+        $categories = Kategori::all();
+
+                return inertia('welcome', [
+
+            'popularFoods' => $products,
+            'categories' => $categories,
+            'stores' => [],
+            'currentView' => 'menu'
+        ]);
+    }
+
+    public function categories()
+    {
+        $categories = Kategori::withCount(['produks' => function($query) {
+            $query->where('stok', '>', 0);
+        }])->get();
+
+        return inertia('welcome', [
+            'popularFoods' => [],
+            'categories' => $categories,
+            'stores' => [],
+            'currentView' => 'categories'
+        ]);
+    }
+
+    public function stores()
+    {
+        $stores = Toko::withCount(['produks' => function($query) {
+            $query->where('stok', '>', 0);
+        }])->get();
+
+                return inertia('welcome', [
+
+            'popularFoods' => [],
+            'categories' => [],
+            'stores' => $stores,
+            'currentView' => 'stores'
+        ]);
     }
 }

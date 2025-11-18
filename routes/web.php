@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DetailGambarController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\UserController;
@@ -13,6 +14,9 @@ use App\Http\Controllers\TokoSayaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
+Route::get('/menu', [WelcomeController::class, 'menu'])->name('menu');
+Route::get('/categories', [WelcomeController::class, 'categories'])->name('categories');
+Route::get('/stores', [WelcomeController::class, 'stores'])->name('stores');
 //login
 Route::get('/login', [LoginController::class,'loginShow'])->name('login');
 Route::post('/login', [LoginController::class,'login'])->name('loginPost');
@@ -62,6 +66,9 @@ Route::middleware(['auth', 'verified'])
         Route::post('toko/edit/{id}', [TokoSayaController::class, 'edit'])->name('member.toko.edit');
         Route::delete('toko/hapus/{id}', [TokoSayaController::class, 'destroy'])->name('member.toko.hapus');
         Route::get('toko/buat', [TokoSayaController::class, 'create'])->name('member.toko.buat');
+        //detail-gambar
+        Route::get('produk/detail/{id}', [DetailGambarController::class, 'show'])->name('member.produk.detail');
+        Route::delete('produk/{productId}/gambar/{imageId}', [DetailGambarController::class, 'deleteImage'])->name('member.produk.deleteImage');
 
         });
 
