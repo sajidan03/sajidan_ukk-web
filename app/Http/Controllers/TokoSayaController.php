@@ -18,7 +18,7 @@ class TokoSayaController extends Controller
         if ($toko) {
             $tokoData = [
                 'id' => $toko->id,
-                'encrypted_id' => encrypt($toko->id),
+                'encrypted_id' => Crypt::encrypt($toko->id),
                 'nama_toko' => $toko->nama_toko,
                 'deskripsi' => $toko->deskripsi,
                 'gambar' => $toko->gambar,
@@ -77,7 +77,6 @@ class TokoSayaController extends Controller
         ]);
     }
 
-    // UPDATE TOKO - PROSES
     public function edit(Request $request)
     {
         $toko = Toko::where('id_user', Auth::id())->first();

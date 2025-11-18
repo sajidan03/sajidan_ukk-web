@@ -12,22 +12,32 @@ import {
 
 interface User {
   id: number
-  name: string
+  nama: string
   username: string
   role: string
+  kontak: string
 }
 
 export default function Edit({ user }: { user: User }) {
-  const { data, setData, put, processing, errors } = useForm({
-    name: user.name || "",
+  const { data, setData, post, processing, errors } = useForm({
+    nama: user.nama || "",
     username: user.username || "",
     role: user.role || "",
+    kontak: user.kontak || "",
     password: "",
   })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    put(`/admin/user/edit/${user.id}`)
+    post(`/admin/user/edit/${user.id}`)
+  }
+
+  const handleKontakChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    // Hanya menerima angka
+    if (/^\d*$/.test(value)) {
+      setData("kontak", value)
+    }
   }
 
   return (
@@ -46,11 +56,11 @@ export default function Edit({ user }: { user: User }) {
             <Label>Nama</Label>
             <Input
               type="text"
-              value={data.name}
-              onChange={(e) => setData("name", e.target.value)}
+              value={data.nama}
+              onChange={(e) => setData("nama", e.target.value)}
             />
-            {errors.name && (
-              <div className="text-red-600 text-sm">{errors.name}</div>
+            {errors.nama && (
+              <div className="text-red-600 text-sm">{errors.nama}</div>
             )}
           </div>
 
@@ -64,6 +74,21 @@ export default function Edit({ user }: { user: User }) {
             />
             {errors.username && (
               <div className="text-red-600 text-sm">{errors.username}</div>
+            )}
+          </div>
+
+          {/* Kontak */}
+          <div>
+            <Label>Kontak</Label>
+            <Input
+              type="text"
+              value={data.kontak}
+              onChange={handleKontakChange}
+              placeholder="Masukkan nomor telepon"
+              inputMode="numeric"
+            />
+            {errors.kontak && (
+              <div className="text-red-600 text-sm">{errors.kontak}</div>
             )}
           </div>
 
@@ -93,7 +118,7 @@ export default function Edit({ user }: { user: User }) {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="admin">Admin</SelectItem>
-                <SelectItem value="operator">Operator</SelectItem>
+                <SelectItem value="member">Member</SelectItem>
               </SelectContent>
             </Select>
             {errors.role && (

@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
                 'nama' => 'Muhammad Sajidan',
                 'username' => 'sajidan',
                 'password' => bcrypt('sajidan'),
+                'kontak' => '08123456789',
                 'role' => 'admin',
             ]
         );
@@ -32,6 +33,7 @@ class DatabaseSeeder extends Seeder
                 'nama' => 'Supri',
                 'username' => 'supri',
                 'password' => bcrypt('supri'),
+                'kontak' => '08123456789',
                 'role' => 'member',
             ]
         );

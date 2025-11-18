@@ -15,6 +15,7 @@ interface User {
   nama: string
   username: string
   role: string
+  kontak: string
   created_at: string
   encrypted_id: string
 }
@@ -65,6 +66,7 @@ export default function Dashboard() {
                 <th className="px-4 py-3 text-left">No</th>
                 <th className="px-4 py-3 text-left">Nama</th>
                 <th className="px-4 py-3 text-left">Username</th>
+                <th className="px-4 py-3 text-left">Kontak</th>
                 <th className="px-4 py-3 text-left">Role</th>
                 <th className="px-4 py-3 text-left">Dibuat</th>
                 <th className="px-4 py-3 text-center">Aksi</th>
@@ -77,6 +79,7 @@ export default function Dashboard() {
                     <td className="px-4 py-3">{index + 1}</td>
                     <td className="px-4 py-3">{users.nama}</td>
                     <td className="px-4 py-3">{users.username}</td>
+                    <td className="px-4 py-3">{users.kontak}</td>
                     <td className="px-4 py-3">
                       <span
                         className={`px-2 py-1 text-xs rounded-md ${

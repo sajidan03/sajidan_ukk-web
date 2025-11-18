@@ -53,7 +53,7 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ popularFoods, auth }) => {
                                 href="/"
                                 className="text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 relative group"
                             >
-                                Home
+                                Beranda
                                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-200 group-hover:w-full"></span>
                             </Link>
                             <Link
@@ -67,14 +67,14 @@ const WelcomePage: React.FC<WelcomePageProps> = ({ popularFoods, auth }) => {
                                 href="/categories"
                                 className="text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 relative group"
                             >
-                                Category
+                                Kategori
                                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-200 group-hover:w-full"></span>
                             </Link>
                             <Link
                                 href="/contact"
                                 className="text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 relative group"
                             >
-                                Contact
+                                Toko
                                 <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-200 group-hover:w-full"></span>
                             </Link>
                         </div>

@@ -23,7 +23,7 @@ Route::middleware(['auth', 'verified'])
         //kelola-user
         Route::get('user', [UserController::class, 'index'])->name('userView');
         Route::get('user/tambah', [UserController::class, 'tambahView'])->name('userTambahView');
-        Route::post('user/simpan', [UserController::class, 'simpan'])->name('userSimpan');
+        Route::post('user/tambah', [UserController::class, 'simpan'])->name('userSimpan');
         Route::get('user/edit/{id}', [UserController::class, 'userEditView'])->name('userEditView');
         Route::post('user/edit/{id}', [UserController::class, 'editUser'])->name('userEdit');
         Route::delete('user/hapus/{id}', [UserController::class, 'hapusUser'])->name('userHapus');
@@ -33,7 +33,7 @@ Route::middleware(['auth', 'verified'])
         Route::post('toko/tambah', [TokoController::class, 'simpan'])->name('admin.toko.store');
         Route::get('toko/{id}', [TokoController::class, 'show'])->name('admin.toko.show');
         Route::get('toko/edit/{id}', [TokoController::class, 'editView'])->name('admin.toko.edit');
-        Route::put('toko/edit/{id}', [TokoController::class, 'edit'])->name('admin.toko.update');
+        Route::post('toko/edit/{id}', [TokoController::class, 'edit'])->name('admin.toko.update');
         Route::delete('toko/hapus/{id}', [TokoController::class, 'destroy'])->name('admin.toko.destroy');
         Route::get('toko/export', [TokoController::class, 'export'])->name('admin.toko.export');
         //kelola-kategori

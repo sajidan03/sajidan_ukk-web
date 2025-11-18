@@ -1,7 +1,7 @@
 // resources/js/Pages/Admin/Toko/Edit.tsx
 import AppLayout from '@/layouts/app-layout'
 import { type BreadcrumbItem } from '@/types'
-import { Head, Link, router, useForm } from '@inertiajs/react'
+import { Head, Link, useForm } from '@inertiajs/react'
 import { useState, useEffect } from 'react'
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -33,7 +33,7 @@ interface Toko {
 }
 
 export default function EditToko({ toko, users }: { toko: Toko; users: User[] }) {
-  const { data, setData, put, processing, errors } = useForm({
+  const { data, setData, post, processing, errors } = useForm({
     nama_toko: toko.nama_toko || '',
     deskripsi: toko.deskripsi || '',
     gambar: null as File | null,
@@ -46,7 +46,7 @@ export default function EditToko({ toko, users }: { toko: Toko; users: User[] })
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    put(`/admin/toko/edit/${toko.encrypted_id}`)
+    post(`/admin/toko/edit/${toko.encrypted_id}`)
   }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -21,6 +21,7 @@ class UserController extends Controller
                 'nama' => $user->nama,
                 'username' => $user->username,
                 'password'=> $user->password,
+                'kontak' => $user->kontak,
                 'role' => $user->role,
                 'created_at' => $user->created_at,
                 'encrypted_id' => Crypt::encrypt($user->id),
@@ -49,16 +50,18 @@ class UserController extends Controller
  public function simpan(Request $request)
 {
     $request->validate([
-        'name' => 'required|string|max:255',
+        'nama' => 'required|string|max:255',
         'username' => 'required|string|unique:users,username',
         'password' => 'required',
+        'kontak' => 'required|string|max:13',
         'role' => 'required|in:admin,member',
     ]);
 
-    User::create([
-        'name' => $request->name,
+    $user = User::create([
+        'nama' => $request->nama,
         'username' => $request->username,
         'password' => bcrypt($request->password),
+        'kontak' => $request->kontak,
         'role' => $request->role,
     ]);
 
@@ -70,15 +73,17 @@ return redirect()->route('userView')->with('success', 'User berhasil ditambahkan
     $user = User::findOrFail($id);
 
     $request->validate([
-        'name' => 'required|string|max:255',
+        'nama' => 'required|string|max:255',
         'username' => 'required|string|unique:users,username,' . $user->id,
         'password' => 'nullable|string|',
+        'kontak' => 'required|string|max:13',
         'role' => 'required|in:admin,member',
     ]);
 
     $data = [
-        'name' => $request->name,
+        'nama' => $request->nama,
         'username' => $request->username,
+        'kontak' => $request->kontak,
         'role' => $request->role,
     ];
 

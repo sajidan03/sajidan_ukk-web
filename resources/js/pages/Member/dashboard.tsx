@@ -5,9 +5,7 @@ import { Head } from '@inertiajs/react';
 import {
   Package,
   Store,
-  Users,
   TrendingUp,
-  Calendar,
   Edit,
   Trash2,
   Eye,
