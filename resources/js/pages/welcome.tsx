@@ -1270,58 +1270,180 @@ const WelcomePage: React.FC<WelcomePageProps> = ({
     );
 
     // Render Stores View
+    // const renderStoresView = () => (
+    //     <section className="mt-6 sm:mt-8 md:mt-10 mx-auto w-full px-3 sm:px-4 md:px-6 flex-1 max-w-7xl">
+    //         <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">Daftar Toko</h2>
+
+    //         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    //             {stores.map((toko) => (
+    //                 <div
+    //                     key={toko.id}
+    //                     className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 overflow-hidden"
+    //                 >
+    //                     <img
+    //                         src={getStoreImage(toko)}
+    //                         alt={toko.nama_toko}
+    //                         className="w-full h-48 object-cover"
+    //                     />
+    //                     <div className="p-6">
+    //                         <h3 className="font-semibold text-xl mb-2">{toko.nama_toko}</h3>
+    //                         <p className="text-gray-600 text-sm mb-4 line-clamp-2">{toko.deskripsi}</p>
+
+    //                         <div className="space-y-2 mb-4">
+    //                             <div className="flex items-center text-sm text-gray-500">
+    //                                 <span className="mr-2">📞</span>
+    //                                 {toko.kontak_toko}
+    //                             </div>
+    //                             <div className="flex items-start text-sm text-gray-500">
+    //                                 <span className="mr-2 mt-1">📍</span>
+    //                                 <span className="line-clamp-2">{toko.alamat}</span>
+    //                             </div>
+    //                         </div>
+
+    //                         <div className="flex justify-between items-center">
+    //                             <span className="text-yellow-600 font-semibold">
+    //                                 ⭐ {toko.produks_count || 0} Produk
+    //                             </span>
+    //                             <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+    //                                 Kunjungi Toko
+    //                             </button>
+    //                         </div>
+    //                     </div>
+    //                 </div>
+    //             ))}
+    //         </div>
+
+    //         {stores.length === 0 && (
+    //             <div className="text-center py-12">
+    //                 <div className="text-gray-400 text-6xl mb-4">🏪</div>
+    //                 <h3 className="text-xl font-semibold text-gray-600 mb-2">Belum ada toko</h3>
+    //                 <p className="text-gray-500">Toko akan segera tersedia</p>
+    //             </div>
+    //         )}
+    //     </section>
+    // );
+
     const renderStoresView = () => (
-        <section className="mt-6 sm:mt-8 md:mt-10 mx-auto w-full px-3 sm:px-4 md:px-6 flex-1 max-w-7xl">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-8">Daftar Toko</h2>
+    <section className="mt-6 sm:mt-8 md:mt-10 mx-auto w-full px-3 sm:px-4 md:px-6 flex-1 max-w-7xl">
+        <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Daftar Toko</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Temukan berbagai toko terpercaya di SA Market
+            </p>
+        </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {stores.map((toko) => (
-                    <div
-                        key={toko.id}
-                        className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 overflow-hidden"
-                    >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {stores.map((toko) => (
+                <div
+                    key={toko.id}
+                    className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100 overflow-hidden group"
+                >
+                    <div className="relative overflow-hidden">
                         <img
-                            src={getStoreImage(toko)}
+                            src={`/storage/assets/toko/${toko.gambar}`}
                             alt={toko.nama_toko}
-                            className="w-full h-48 object-cover"
+                            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                            onError={(e) => {
+                                e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgZmlsbD0iI2YzZjNmMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iMC4zNWVtIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE2IiBmaWxsPSIjOTk5Ij5Ub2tvIEltYWdlPC90ZXh0Pjwvc3ZnPg==';
+                            }}
                         />
-                        <div className="p-6">
-                            <h3 className="font-semibold text-xl mb-2">{toko.nama_toko}</h3>
-                            <p className="text-gray-600 text-sm mb-4 line-clamp-2">{toko.deskripsi}</p>
-
-                            <div className="space-y-2 mb-4">
-                                <div className="flex items-center text-sm text-gray-500">
-                                    <span className="mr-2">📞</span>
-                                    {toko.kontak_toko}
-                                </div>
-                                <div className="flex items-start text-sm text-gray-500">
-                                    <span className="mr-2 mt-1">📍</span>
-                                    <span className="line-clamp-2">{toko.alamat}</span>
-                                </div>
-                            </div>
-
-                            <div className="flex justify-between items-center">
-                                <span className="text-yellow-600 font-semibold">
-                                    ⭐ {toko.produks_count || 0} Produk
-                                </span>
-                                <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
-                                    Kunjungi Toko
-                                </button>
-                            </div>
+                        <div className="absolute top-4 right-4">
+                            <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                {toko.produks_count || 0} Produk
+                            </span>
                         </div>
                     </div>
-                ))}
-            </div>
 
-            {stores.length === 0 && (
-                <div className="text-center py-12">
-                    <div className="text-gray-400 text-6xl mb-4">🏪</div>
-                    <h3 className="text-xl font-semibold text-gray-600 mb-2">Belum ada toko</h3>
-                    <p className="text-gray-500">Toko akan segera tersedia</p>
+                    <div className="p-6">
+                        <div className="flex items-start justify-between mb-3">
+                            <h3 className="font-bold text-xl text-gray-900 group-hover:text-blue-600 transition-colors">
+                                {toko.nama_toko}
+                            </h3>
+                        </div>
+
+                        <p className="text-gray-600 text-sm mb-4 line-clamp-3 leading-relaxed">
+                            {toko.deskripsi}
+                        </p>
+
+                        <div className="space-y-3 mb-6">
+                            <div className="flex items-center text-sm text-gray-600">
+                                <svg className="w-4 h-4 mr-3 text-green-600 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M2.5 4.25C2.5 3.00736 3.50736 2 4.75 2H5.84884C6.56741 2 7.22286 2.421 7.5 3.09199L8.64882 5.90801C8.92596 6.579 9.58141 7 10.3 7H17.75C18.9926 7 20 8.00736 20 9.25V18.75C20 19.9926 18.9926 21 17.75 21H4.75C3.50736 21 2.5 19.9926 2.5 18.75V4.25Z"/>
+                                    <path d="M8 12H16M8 16H12" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+                                </svg>
+                                <span className="font-medium">{toko.kontak_toko}</span>
+                            </div>
+
+                            <div className="flex items-start text-sm text-gray-600">
+                                <svg className="w-4 h-4 mr-3 text-blue-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 010-5 2.5 2.5 0 010 5z"/>
+                                </svg>
+                                <span className="line-clamp-2">{toko.alamat}</span>
+                            </div>
+                        </div>
+
+                        <div className="flex justify-between items-center pt-4 border-t border-gray-100">
+                            <div className="flex items-center text-sm text-gray-500">
+                                <svg className="w-4 h-4 mr-1 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                                </svg>
+                                <span className="font-semibold text-gray-700">{toko.produks_count || 0} Produk Tersedia</span>
+                            </div>
+
+                            <button
+                                onClick={() => {
+                                    // Bisa ditambahkan fungsi untuk melihat detail toko
+                                    setCurrentViewState('menu');
+                                }}
+                                className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200 font-medium flex items-center gap-2 group/btn"
+                            >
+                                <span>Lihat Toko</span>
+                                <svg className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            )}
-        </section>
-    );
+            ))}
+        </div>
+
+        {stores.length === 0 && (
+            <div className="text-center py-16">
+                <div className="text-gray-300 text-8xl mb-6">🏪</div>
+                <h3 className="text-2xl font-semibold text-gray-600 mb-3">Belum Ada Toko</h3>
+                <p className="text-gray-500 max-w-md mx-auto mb-8">
+                    Saat ini belum ada toko yang terdaftar. Silakan kembali lagi nanti.
+                </p>
+                <button
+                    onClick={() => setCurrentViewState('home')}
+                    className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition duration-200 font-semibold"
+                >
+                    Kembali ke Beranda
+                </button>
+            </div>
+        )}
+
+        {/* Info Section */}
+        <div className="mt-16 bg-blue-50 rounded-2xl p-8 text-center">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">Ingin Membuka Toko?</h3>
+            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+                Bergabunglah dengan SA Market dan jual produk Anda kepada komunitas sekolah kami.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                    href="/login"
+                    className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition duration-200 font-semibold"
+                >
+                    Daftar Sekarang
+                </Link>
+                <button className="bg-white text-blue-600 border border-blue-600 px-8 py-3 rounded-lg hover:bg-blue-50 transition duration-200 font-semibold">
+                    Pelajari Selengkapnya
+                </button>
+            </div>
+        </div>
+    </section>
+);
 
     // Main render function
     const renderCurrentView = () => {
