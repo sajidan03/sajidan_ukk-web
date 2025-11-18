@@ -282,7 +282,7 @@ class ProdukController extends Controller
     //         return back()->with('error', 'Gagal memperbarui produk: ' . $e->getMessage());
     //     }
     // }
-    public function edit(Request $request, $id)
+   public function edit(Request $request, $id)
 {
     try {
         $decryptedId = Crypt::decrypt($id);
@@ -303,10 +303,8 @@ class ProdukController extends Controller
             'gambar_produk.*' => 'image|mimes:jpeg,png,jpg|max:2048',
             'url_wa' => 'nullable|string|max:255',
             'deleted_images' => 'nullable|array',
+            'deleted_images.*' => 'integer', // Validasi sebagai integer
         ]);
-
-        Log::info('Edit Product Request Data:', $request->all());
-        Log::info('Deleted Images:', $request->deleted_images ?? []);
 
         $produk->update([
             'id_kategori' => $request->id_kategori,
@@ -317,12 +315,11 @@ class ProdukController extends Controller
             'url_wa' => $request->url_wa,
         ]);
 
+        // Handle deleted images - PERBAIKAN DI SINI
         if ($request->has('deleted_images') && !empty($request->deleted_images)) {
-            foreach ($request->deleted_images as $deletedImage) {
-                $filename = basename($deletedImage);
-
+            foreach ($request->deleted_images as $deletedImageId) {
                 $gambar = GambarProduk::where('id_produk', $produk->id)
-                    ->where('nama_gambar', $filename)
+                    ->where('id', $deletedImageId)
                     ->first();
 
                 if ($gambar) {
@@ -331,11 +328,12 @@ class ProdukController extends Controller
                         unlink($filePath);
                     }
                     $gambar->delete();
-                    Log::info('Deleted image: ' . $filename);
+                    Log::info('Deleted image with ID: ' . $deletedImageId . ', filename: ' . $gambar->nama_gambar);
                 }
             }
         }
 
+        // Handle new images
         if ($request->hasFile('gambar_produk')) {
             foreach ($request->file('gambar_produk') as $gambar) {
                 $fileName = time() . '_' . uniqid() . '.' . $gambar->getClientOriginalExtension();
