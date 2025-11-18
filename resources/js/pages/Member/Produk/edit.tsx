@@ -45,40 +45,61 @@ interface Produk {
   url_wa: string
   gambar_produk: GambarProduk[]
 }
+
 export default function EditProduk() {
   const { props } = usePage()
   const kategori = props.kategori as Kategori[]
   const toko = props.toko as Toko
   const produk = props.produk as Produk
 
-  const [previewImages, setPreviewImages] = useState<{url: string, type: 'existing' | 'new', file?: File}[]>([])
+  const [previewImages, setPreviewImages] = useState<{url: string, type: 'existing' | 'new', id?: number, file?: File}[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const { data, setData, post, processing, errors } = useForm({
-    encrypted_id: produk.encrypted_id,
     id_kategori: produk.id_kategori.toString(),
     nama_produk: produk.nama_produk,
     harga: produk.harga.toString(),
     stok: produk.stok.toString(),
     deskripsi: produk.deskripsi,
-    url_wa: produk.url_wa,
+    url_wa: produk.url_wa || '',
     gambar_produk: [] as File[],
-    deleted_images: [] as string[],
+    deleted_images: [] as number[], // Ubah menjadi array number untuk ID gambar
   })
 
   const currentBreadcrumbs = breadcrumbs({ productName: produk.nama_produk })
+
   useEffect(() => {
+    // Inisialisasi preview images dari data produk
     const existingPreviews = produk.gambar_produk.map(img => ({
       url: img.url,
-      type: 'existing' as const
+      type: 'existing' as const,
+      id: img.id
     }))
     setPreviewImages(existingPreviews)
   }, [produk.gambar_produk])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    post(`/member/produk/edit/${produk.id}`)
-  }
+
+    // Buat FormData untuk handle file upload
+    const formData = new FormData()
+    formData.append('id_kategori', data.id_kategori)
+    formData.append('nama_produk', data.nama_produk)
+    formData.append('harga', data.harga)
+    formData.append('stok', data.stok)
+    formData.append('deskripsi', data.deskripsi)
+    formData.append('url_wa', data.url_wa)
+
+    // Append deleted images (ID gambar yang dihapus)
+    data.deleted_images.forEach(id => {
+      formData.append('deleted_images[]', id.toString())
+    })
+
+    data.gambar_produk.forEach(file => {
+      formData.append('gambar_produk[]', file)
+    })
+
+    post(`/member/produk/edit/${produk.encrypted_id}`)
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
@@ -108,6 +129,7 @@ export default function EditProduk() {
     const imageToRemove = previewImages[index]
 
     if (imageToRemove.type === 'new') {
+      // Hapus gambar baru
       const newPreviews = previewImages.filter((_, i) => i !== index)
       const fileIndex = previewImages.slice(0, index).filter(img => img.type === 'new').length
       const newFiles = data.gambar_produk.filter((_, i) => i !== fileIndex)
@@ -116,9 +138,13 @@ export default function EditProduk() {
       setPreviewImages(newPreviews)
       URL.revokeObjectURL(imageToRemove.url)
     } else {
+      // Hapus gambar existing - simpan ID-nya
       const newPreviews = previewImages.filter((_, i) => i !== index)
       setPreviewImages(newPreviews)
-      setData('deleted_images', [...data.deleted_images, imageToRemove.url])
+
+      if (imageToRemove.id) {
+        setData('deleted_images', [...data.deleted_images, imageToRemove.id])
+      }
     }
   }
 
@@ -139,7 +165,7 @@ export default function EditProduk() {
               <div>
                 <h1 className="text-3xl font-bold text-gray-900">Edit Produk</h1>
                 <p className="mt-2 text-gray-600">
-                  Edit produk di toko <strong>{toko.nama_toko}, {produk.encrypted_id}</strong>
+                  Edit produk di toko <strong>{toko.nama_toko}</strong>
                 </p>
               </div>
               <Link
@@ -156,7 +182,7 @@ export default function EditProduk() {
 
           {/* Form */}
           <div className="bg-white rounded-lg shadow-sm border">
-            <form onSubmit={handleSubmit} className="p-8" encType='multipart/form-data'>
+            <form onSubmit={handleSubmit} className="p-8">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Kolom Kiri - Data Produk */}
                 <div className="space-y-6">
@@ -223,7 +249,7 @@ export default function EditProduk() {
                       </label>
                       <div className="relative">
                         <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                          ₩
+                          Rp
                         </span>
                         <input
                           type="number"
@@ -259,14 +285,14 @@ export default function EditProduk() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      URL Wa <span className="text-red-500">*</span>
+                      URL WhatsApp
                     </label>
                     <input
                       type="text"
                       value={data.url_wa}
                       onChange={e => setData('url_wa', e.target.value)}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="Masukkan URL Wa"
+                      placeholder="Masukkan URL WhatsApp"
                     />
                     {errors.url_wa && (
                       <p className="mt-1 text-sm text-red-600">{errors.url_wa}</p>
@@ -295,7 +321,7 @@ export default function EditProduk() {
                 <div className="space-y-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-4">
-                      Gambar Produk <span className="text-red-500">*</span>
+                      Gambar Produk
                       <span className="text-gray-500 text-sm font-normal ml-2">
                         (Maksimal 5 gambar, format: JPG, PNG, JPEG)
                       </span>
@@ -356,7 +382,7 @@ export default function EditProduk() {
                               </svg>
                             </button>
                             <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 text-white text-xs py-1 text-center">
-                              {preview.type === 'new' ? 'Gambar Baru' : 'Gambar Existing'} {index + 1}
+                              {preview.type === 'new' ? 'Gambar Baru' : 'Gambar Existing'}
                             </div>
                           </div>
                         ))}
