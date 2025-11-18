@@ -24,8 +24,8 @@ interface Produk {
     deskripsi: string;
     tanggal_upload: string;
     id_toko: number;
-    url_vra: string;
-    gambar_produks?: GambarProduk[];
+    url_wa: string;
+    gambar_produk?: GambarProduk[];
     kategori?: Kategori;
     toko?: Toko;
 }
@@ -67,13 +67,13 @@ const WelcomePage: React.FC<WelcomePageProps> = ({
     stores = [],
     currentView = 'home',
 }) => {
-    const [isProfileOpen, setIsProfileOpen] = useState(false);
+    // const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [currentViewState, setCurrentViewState] = useState<PageView>(currentView as PageView);
     const [selectedCategory, setSelectedCategory] = useState<number | 'all'>('all');
     const [searchTerm, setSearchTerm] = useState('');
 
-    const user = null; // Force non-login state
+    // const user = null; // Force non-login state
 
     useEffect(() => {
         setCurrentViewState(currentView as PageView);
@@ -94,12 +94,18 @@ const WelcomePage: React.FC<WelcomePageProps> = ({
         }).format(amount);
     };
 
-    const getProductImage = (produk: Produk) => {
-        if (produk.gambar_produks && produk.gambar_produks.length > 0) {
-            return `/storage/assets/produk/${produk.gambar_produks[0].nama_gambar}`;
-        }
-        return '/storage/assets/default-product.jpg';
-    };
+   const getProductImage = (produk: Produk) => {
+    console.log('Product:', produk.nama_produk);
+    console.log('Gambar Produk:', produk.gambar_produk);
+
+    if (produk.gambar_produk && produk.gambar_produk.length > 0) {
+        const imagePath = `/storage/assets/produk/${produk.gambar_produk[0].nama_gambar}`;
+        console.log('Image Path:', imagePath);
+        return imagePath;
+    }
+    console.log('Using default image for:', produk.nama_produk);
+    return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YzZjNmMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iMC4zNWVtIiB0ZXh0LWFuY2hvcj0ibWkdZGxlIiBmb250LXNpemU9IjE0IiBmaWxsPSIjOTk5Ij5Qcm9kdWs8L3RleHQ+PC9zdmc+';
+};
 
     const getStoreImage = (toko: Toko) => {
         if (toko.gambar) {
@@ -684,13 +690,12 @@ console.log('Stores Data:', stores);
                             </div>
                             <div className="bg-yellow-500/20 border border-yellow-500/30 rounded-lg p-2 sm:p-3">
                                 <p className="text-xs text-yellow-200">
-                                    💡 <strong>Tips:</strong> Pesan via WhatsApp sebelum jam istirahat untuk menghindari antrian!
+                                   <strong>Tips:</strong> Pesan via WhatsApp sebelum jam istirahat untuk menghindari antrian!
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    {/* Bottom Footer */}
                     <div className="border-t border-gray-700 mt-6 sm:mt-8 pt-4 sm:pt-6 flex flex-col sm:flex-row justify-between items-center">
                         <p className="text-gray-400 text-xs sm:text-sm text-center sm:text-left">
                             © 2024 SA Market. All rights reserved.

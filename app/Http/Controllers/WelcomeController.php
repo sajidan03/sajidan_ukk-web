@@ -9,25 +9,28 @@ use App\Models\Toko;
 
 class WelcomeController extends Controller
 {
-    public function index()
-    {
-        $popularFoods = Produk::with(['gambarProduk', 'kategori', 'toko'])
-            ->where('stok', '>', 0)
-            ->orderBy('tanggal_upload', 'desc')
-            ->limit(8)
-            ->get();
+   public function index()
+{
+    $popularFoods = Produk::with(['gambarProduk', 'kategori', 'toko'])
+        ->where('stok', '>', 0)
+        ->orderBy('tanggal_upload', 'desc')
+        ->limit(8)
+        ->get()
+        ->map(function ($produk) {
+            $produk->gambarProduk = $produk->gambar_produk;
+            unset($produk->gambar_produk);
+            return $produk;
+        });
 
-        $categories = Kategori::all();
+    $categories = Kategori::all();
+    $stores = Toko::all();
 
-        $stores = Toko::all();
-
-                return inertia('welcome', [
-
-            'popularFoods' => $popularFoods,
-            'categories' => $categories,
-            'stores' => $stores,
-        ]);
-    }
+    return inertia('welcome', [
+        'popularFoods' => $popularFoods,
+        'categories' => $categories,
+        'stores' => $stores,
+    ]);
+}
 
     public function menu()
     {
