@@ -37,14 +37,24 @@ class DatabaseSeeder extends Seeder
                 'role' => 'member',
             ]
         );
+            User::create(
+            [
+                'nama' => 'Jidan',
+                'username' => 'jidan',
+                'password' => bcrypt('jidan'),
+                'kontak' => '08123456789',
+                'role' => 'member',
+            ]
+        );
         Toko::create(
             [
-                'nama_toko' => 'Supri',
+                'nama_toko' => 'Jidan',
                 'deskripsi' => 'Menjual berbagai alat perabotan',
                 'gambar' => 'toko.png',
-                'id_user' => 2,
+                'id_user' => 3,
                 'kontak_toko' => '08123456789',
                 'alamat' => 'Tasikmalaya',
+                'status' => 'aktif',
             ],
         );
         Toko::create(
@@ -55,6 +65,7 @@ class DatabaseSeeder extends Seeder
                 'id_user' => 2,
                 'kontak_toko' => '08123456789',
                 'alamat' => 'Tasikmalaya',
+                'status' => 'non-aktif',
             ],
         );
         Kategori::create(

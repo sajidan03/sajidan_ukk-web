@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('id_user')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('kontak_toko', 13);
             $table->text('alamat');
+            $table->enum('status', ['aktif', 'non-aktif'])->default('non-aktif');
             $table->timestamps();
         });
     }
