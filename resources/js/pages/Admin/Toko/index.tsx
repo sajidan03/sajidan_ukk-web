@@ -18,6 +18,7 @@ interface Toko {
   id_user: number
   kontak_toko: string
   alamat: string
+  status: 'aktif' | 'non-aktif'
   created_at: string
   updated_at: string
   encrypted_id: string
@@ -39,10 +40,17 @@ export default function KelolaToko() {
     }
   }
 
+  const handleToggleStatus = (id: string) => {
+    if (confirm('Apakah Anda yakin ingin mengubah status toko ini?')) {
+      router.post(`/admin/toko/toggle-status/${id}`)
+    }
+  }
+
   const filteredToko = toko.filter(tokoItem =>
     tokoItem.nama_toko.toLowerCase().includes(searchTerm.toLowerCase()) ||
     tokoItem.alamat.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    tokoItem.kontak_toko.toLowerCase().includes(searchTerm.toLowerCase())
+    tokoItem.kontak_toko.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    tokoItem.status.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   return (
@@ -109,6 +117,7 @@ export default function KelolaToko() {
                 <th className="px-4 py-3 text-left">Kontak</th>
                 <th className="px-4 py-3 text-left">Alamat</th>
                 <th className="px-4 py-3 text-left">Pemilik</th>
+                <th className="px-4 py-3 text-left">Status</th>
                 <th className="px-4 py-3 text-left">Dibuat</th>
                 <th className="px-4 py-3 text-center">Aksi</th>
               </tr>
@@ -152,6 +161,18 @@ export default function KelolaToko() {
                         {tokoItem.user?.nama || 'Tidak tersedia'}
                       </span>
                     </td>
+                    <td className="px-4 py-3">
+                      <button
+                        onClick={() => handleToggleStatus(tokoItem.encrypted_id)}
+                        className={`px-3 py-1 text-xs rounded-full font-medium transition duration-200 ${
+                          tokoItem.status === 'aktif'
+                            ? 'bg-green-100 text-green-800 hover:bg-green-200'
+                            : 'bg-red-100 text-red-800 hover:bg-red-200'
+                        }`}
+                      >
+                        {tokoItem.status === 'aktif' ? 'Aktif' : 'Non-aktif'}
+                      </button>
+                    </td>
                     <td className="px-4 py-3 text-sm">
                       {new Date(tokoItem.created_at).toLocaleDateString('id-ID')}
                     </td>
@@ -181,7 +202,7 @@ export default function KelolaToko() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={9} className="px-4 py-8 text-center text-gray-500">
+                  <td colSpan={10} className="px-4 py-8 text-center text-gray-500">
                     <div className="flex flex-col items-center justify-center">
                       <svg className="w-16 h-16 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />

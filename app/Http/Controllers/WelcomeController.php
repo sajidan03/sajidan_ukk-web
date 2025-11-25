@@ -135,7 +135,7 @@ class WelcomeController extends Controller
         ->limit(4)
         ->get();
 
-    return Inertia::render('produk-detail', [
+    return Inertia::render('detail-produk', [
         'product' => $product,
         'relatedProducts' => $relatedProducts,
     ]);

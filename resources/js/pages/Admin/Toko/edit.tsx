@@ -30,6 +30,7 @@ interface Toko {
   id_user: number
   kontak_toko: string
   alamat: string
+  status: 'aktif' | 'non-aktif'
 }
 
 export default function EditToko({ toko, users }: { toko: Toko; users: User[] }) {
@@ -40,6 +41,7 @@ export default function EditToko({ toko, users }: { toko: Toko; users: User[] })
     id_user: toko.id_user || '',
     kontak_toko: toko.kontak_toko || '',
     alamat: toko.alamat || '',
+    status: toko.status || 'aktif', // Tambahkan status
   })
 
   const [previewImage, setPreviewImage] = useState<string | null>(toko.gambar)
@@ -133,6 +135,54 @@ export default function EditToko({ toko, users }: { toko: Toko; users: User[] })
                   </select>
                   {errors.id_user && (
                     <p className="text-red-500 text-sm mt-2">{errors.id_user}</p>
+                  )}
+                </div>
+
+                {/* Status */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-3">
+                    Status Toko *
+                  </label>
+                  <div className="space-y-2">
+                    <div className="flex items-center">
+                      <input
+                        type="radio"
+                        id="status-aktif"
+                        name="status"
+                        value="aktif"
+                        checked={data.status === 'aktif'}
+                        onChange={(e) => setData('status', e.target.value)}
+                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                      />
+                      <label htmlFor="status-aktif" className="ml-3 block text-sm font-medium text-gray-700">
+                        <span className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                          Aktif
+                        </span>
+                        <p className="text-gray-500 text-xs mt-1">Toko dapat dilihat dan beroperasi normal</p>
+                      </label>
+                    </div>
+                    <div className="flex items-center">
+                      <input
+                        type="radio"
+                        id="status-nonaktif"
+                        name="status"
+                        value="non-aktif"
+                        checked={data.status === 'non-aktif'}
+                        onChange={(e) => setData('status', e.target.value)}
+                        className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
+                      />
+                      <label htmlFor="status-nonaktif" className="ml-3 block text-sm font-medium text-gray-700">
+                        <span className="flex items-center gap-2">
+                          <div className="w-2 h-2 bg-red-500 rounded-full"></div>
+                          Non-aktif
+                        </span>
+                        <p className="text-gray-500 text-xs mt-1">Toko tidak dapat dilihat dan beroperasi</p>
+                      </label>
+                    </div>
+                  </div>
+                  {errors.status && (
+                    <p className="text-red-500 text-sm mt-2">{errors.status}</p>
                   )}
                 </div>
 

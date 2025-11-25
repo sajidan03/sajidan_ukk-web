@@ -24,11 +24,13 @@ class Toko extends Model
         return $this->hasMany(Produk::class, 'id_toko');
     }
 
- 
+
     public function scopeWithAvailableProducts($query)
     {
         return $query->withCount(['produks' => function($query) {
             $query->where('stok', '>', 0);
         }]);
     }
+     const STATUS_AKTIF = 'aktif';
+    const STATUS_NONAKTIF = 'non-aktif';
 }

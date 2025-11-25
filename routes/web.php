@@ -49,6 +49,7 @@ Route::middleware(['auth', 'verified'])
         Route::post('toko/edit/{id}', [TokoController::class, 'edit'])->name('admin.toko.update');
         Route::delete('toko/hapus/{id}', [TokoController::class, 'destroy'])->name('admin.toko.destroy');
         Route::get('toko/export', [TokoController::class, 'export'])->name('admin.toko.export');
+        Route::post('toko/toggle-status/{id}', [TokoController::class, 'toggleStatus'])->name('admin.toko.toggle-status');
         //kelola-kategori
         Route::get('kategori', [KategoriController::class, 'index'])->name('adminKategoriView');
         Route::get('kategori/tambah', [KategoriController::class, 'tambahView']);
