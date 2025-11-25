@@ -41,7 +41,7 @@ export default function EditToko({ toko, users }: { toko: Toko; users: User[] })
     id_user: toko.id_user || '',
     kontak_toko: toko.kontak_toko || '',
     alamat: toko.alamat || '',
-    status: toko.status || 'aktif', // Tambahkan status
+    status: toko.status || 'aktif',
   })
 
   const [previewImage, setPreviewImage] = useState<string | null>(toko.gambar)
@@ -56,6 +56,13 @@ export default function EditToko({ toko, users }: { toko: Toko; users: User[] })
     if (file) {
       setData('gambar', file)
       setPreviewImage(URL.createObjectURL(file))
+    }
+  }
+
+  // Fungsi untuk handle perubahan status dengan type safety
+  const handleStatusChange = (value: string) => {
+    if (value === 'aktif' || value === 'non-aktif') {
+      setData('status', value)
     }
   }
 
@@ -151,7 +158,7 @@ export default function EditToko({ toko, users }: { toko: Toko; users: User[] })
                         name="status"
                         value="aktif"
                         checked={data.status === 'aktif'}
-                        onChange={(e) => setData('status', e.target.value)}
+                        onChange={(e) => handleStatusChange(e.target.value)}
                         className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
                       />
                       <label htmlFor="status-aktif" className="ml-3 block text-sm font-medium text-gray-700">
@@ -169,7 +176,7 @@ export default function EditToko({ toko, users }: { toko: Toko; users: User[] })
                         name="status"
                         value="non-aktif"
                         checked={data.status === 'non-aktif'}
-                        onChange={(e) => setData('status', e.target.value)}
+                        onChange={(e) => handleStatusChange(e.target.value)}
                         className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300"
                       />
                       <label htmlFor="status-nonaktif" className="ml-3 block text-sm font-medium text-gray-700">
