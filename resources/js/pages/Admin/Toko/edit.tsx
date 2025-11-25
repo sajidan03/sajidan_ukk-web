@@ -1,4 +1,3 @@
-// resources/js/Pages/Admin/Toko/Edit.tsx
 import AppLayout from '@/layouts/app-layout'
 import { type BreadcrumbItem } from '@/types'
 import { Head, Link, useForm } from '@inertiajs/react'
@@ -59,14 +58,12 @@ export default function EditToko({ toko, users }: { toko: Toko; users: User[] })
     }
   }
 
-  // Fungsi untuk handle perubahan status dengan type safety
   const handleStatusChange = (value: string) => {
     if (value === 'aktif' || value === 'non-aktif') {
       setData('status', value)
     }
   }
 
-  // Reset preview image when toko data changes
   useEffect(() => {
     setPreviewImage(toko.gambar)
   }, [toko.gambar])
