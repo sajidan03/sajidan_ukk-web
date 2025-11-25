@@ -34,10 +34,10 @@ class AuthenticatedSessionController extends Controller
         $user = Auth::user();
 
         if ($user->role === 'admin') {
-            return redirect()->route('admin.dashboard')
+            return redirect()->route('userView')
                 ->with('success', 'Login berhasil! Selamat datang Administrator.');
         } elseif ($user->role === 'member') {
-            return redirect()->route('member.dashboard')
+            return redirect()->route('memberProdukView')
                 ->with('success', 'Login berhasil! Selamat datang Operator.');
         }
 

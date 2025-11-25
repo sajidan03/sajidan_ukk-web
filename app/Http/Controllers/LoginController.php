@@ -28,16 +28,14 @@ class LoginController extends Controller
             Auth::login($user);
             $request->session()->regenerate();
 
-            // Redirect sesuai role
             if ($user->role === 'admin') {
-                return redirect()->route('admin.dashboard')
+                return redirect()->route('userView')
                     ->with('success', 'Login berhasil! Selamat datang Administrator.');
             } elseif ($user->role === 'member') {
-                return redirect()->route('member.dashboard')
+                return redirect()->route('memberProdukView')
                     ->with('success', 'Login berhasil! Selamat datang di dashboard member.');
             }
 
-            // Fallback
             return redirect()->route('member.dashboard');
         }
 

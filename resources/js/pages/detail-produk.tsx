@@ -42,7 +42,7 @@ interface Produk {
     tanggal_upload: string;
     id_toko: number;
     url_wa: string;
-    gambarProduk?: GambarProduk[];
+    gambar_produk?: GambarProduk[];  // snake_case
     kategori?: Kategori;
     toko?: Toko;
 }
@@ -62,8 +62,8 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, relatedProducts 
     };
 
     const getProductImage = (produk: Produk) => {
-        if (produk.gambarProduk && produk.gambarProduk.length > 0) {
-            return `/storage/assets/produk/${produk.gambarProduk[0].nama_gambar}`;
+        if (produk.gambar_produk && produk.gambar_produk.length > 0) {
+            return `/storage/assets/produk/${produk.gambar_produk[0].nama_gambar}`;
         }
         return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2YzZjNmMyIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iMC4zNWVtIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXNpemU9IjE0IiBmaWxsPSIjOTk5Ij5Qcm9kdWs8L3RleHQ+PC9zdmc+';
     };
@@ -114,9 +114,10 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, relatedProducts 
                                     className="w-full h-96 object-cover rounded-lg"
                                 />
                             </div>
-                            {product.gambarProduk && product.gambarProduk.length > 1 && (
+                            {/* PERBAIKAN: gunakan gambar_produk di sini juga */}
+                            {product.gambar_produk && product.gambar_produk.length > 1 && (
                                 <div className="grid grid-cols-4 gap-2">
-                                    {product.gambarProduk.map((gambar, index) => (
+                                    {product.gambar_produk.map((gambar, index) => (
                                         <img
                                             key={gambar.id}
                                             src={`/storage/assets/produk/${gambar.nama_gambar}`}

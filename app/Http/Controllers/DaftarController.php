@@ -31,7 +31,7 @@ class DaftarController extends Controller
         if ($request->hasFile('gambar_toko')) {
             $file = $request->file('gambar_toko');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('public/assets/toko', $fileName);
+            $file->move('storage/assets/toko', $fileName);
             $gambarToko = $fileName;
         } else {
             $gambarToko = 'default-toko.png';
