@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DetailGambarController;
 use App\Http\Controllers\KategoriController;
@@ -22,8 +23,8 @@ Route::get('/stores', [WelcomeController::class, 'stores'])->name('stores');
 Route::get('/toko/{id}', [WelcomeController::class, 'storeDetail'])->name('store.detail');
 Route::post('/fax', [WelcomeController::class, 'fax'])->name('fax');
 //daftar
-Route::get('/daftar', [RegisterController::class, 'index'])->name('registerView');
-Route::post('/daftar', [RegisterController::class, 'daftar'])->name('registerPost');
+Route::get('/daftar', [DaftarController::class, 'index'])->name('registerView');
+Route::post('/daftar', [DaftarController::class, 'daftar'])->name('registerPost');
 //login
 Route::get('/login', [LoginController::class,'loginShow'])->name('login');
 Route::post('/login', [LoginController::class,'login'])->name('loginPost');

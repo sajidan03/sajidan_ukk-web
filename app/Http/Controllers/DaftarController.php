@@ -7,9 +7,10 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class RegisterController extends Controller
+class DaftarController extends Controller
 {
-    public function index(){
+    //
+      public function index(){
         return Inertia::render('daftar');
     }
 
@@ -37,7 +38,7 @@ class RegisterController extends Controller
         }
 
         $user = User::create([
-            'name' => $request->nama,
+            'nama' => $request->nama,
             'username' => $request->username,
             'password' => bcrypt($request->password),
             'kontak' => $request->kontak,
