@@ -27,7 +27,6 @@ class WelcomeController extends Controller
 
         $categories = Kategori::all();
 
-        // Tambahkan encrypted_id ke setiap toko
         $stores = Toko::all()->map(function($toko) {
             $toko->encrypted_id = Crypt::encrypt($toko->id);
             return $toko;
@@ -73,7 +72,6 @@ class WelcomeController extends Controller
 
     public function stores()
     {
-        // Tambahkan encrypted_id ke setiap toko
         $stores = Toko::withCount(['produks' => function($query) {
             $query->where('stok', '>', 0);
         }])->get()->map(function($toko) {
@@ -126,4 +124,20 @@ class WelcomeController extends Controller
     ]);
     return redirect()->back()->with('success', 'Pesan berhasil dikirim!');
  }
+ public function productDetail($id)
+{
+    $product = Produk::with(['gambarProduk', 'kategori', 'toko.user'])
+        ->findOrFail($id);
+
+    $relatedProducts = Produk::with(['gambarProduk', 'kategori'])
+        ->where('id_kategori', $product->id_kategori)
+        ->where('id', '!=', $product->id)
+        ->limit(4)
+        ->get();
+
+    return Inertia::render('produk-detail', [
+        'product' => $product,
+        'relatedProducts' => $relatedProducts,
+    ]);
+}
 }

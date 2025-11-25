@@ -229,9 +229,9 @@ class ComposerStaticInitde34702a58937cb6544a6c94104a1666
         ),
         'phpDocumentor\\Reflection\\' => 
         array (
-            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'ZipStream\\' => 
         array (
@@ -690,10 +690,14 @@ class ComposerStaticInitde34702a58937cb6544a6c94104a1666
         'App\\Http\\Controllers\\Auth\\RegisteredUserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisteredUserController.php',
         'App\\Http\\Controllers\\Auth\\VerifyEmailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerifyEmailController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\DaftarController' => __DIR__ . '/../..' . '/app/Http/Controllers/DaftarController.php',
         'App\\Http\\Controllers\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/DashboardController.php',
+        'App\\Http\\Controllers\\DetailGambarController' => __DIR__ . '/../..' . '/app/Http/Controllers/DetailGambarController.php',
+        'App\\Http\\Controllers\\KategoriController' => __DIR__ . '/../..' . '/app/Http/Controllers/KategoriController.php',
         'App\\Http\\Controllers\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/LoginController.php',
         'App\\Http\\Controllers\\MemberController' => __DIR__ . '/../..' . '/app/Http/Controllers/MemberController.php',
         'App\\Http\\Controllers\\ProdukController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProdukController.php',
+        'App\\Http\\Controllers\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/RegisterController.php',
         'App\\Http\\Controllers\\Settings\\PasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Settings/PasswordController.php',
         'App\\Http\\Controllers\\Settings\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/Settings/ProfileController.php',
         'App\\Http\\Controllers\\TokoController' => __DIR__ . '/../..' . '/app/Http/Controllers/TokoController.php',
@@ -704,6 +708,7 @@ class ComposerStaticInitde34702a58937cb6544a6c94104a1666
         'App\\Http\\Middleware\\HandleInertiaRequests' => __DIR__ . '/../..' . '/app/Http/Middleware/HandleInertiaRequests.php',
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
         'App\\Http\\Requests\\Settings\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Settings/ProfileUpdateRequest.php',
+        'App\\Models\\Fax' => __DIR__ . '/../..' . '/app/Models/Fax.php',
         'App\\Models\\GambarProduk' => __DIR__ . '/../..' . '/app/Models/GambarProduk.php',
         'App\\Models\\Kategori' => __DIR__ . '/../..' . '/app/Models/Kategori.php',
         'App\\Models\\Produk' => __DIR__ . '/../..' . '/app/Models/Produk.php',

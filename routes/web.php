@@ -22,6 +22,7 @@ Route::get('/categories', [WelcomeController::class, 'categories'])->name('categ
 Route::get('/stores', [WelcomeController::class, 'stores'])->name('stores');
 Route::get('/toko/{id}', [WelcomeController::class, 'storeDetail'])->name('store.detail');
 Route::post('/fax', [WelcomeController::class, 'fax'])->name('fax');
+Route::get('/produk/{id}', [WelcomeController::class, 'productDetail'])->name('product.detail');
 //daftar
 Route::get('/daftar', [DaftarController::class, 'index'])->name('registerView');
 Route::post('/daftar', [DaftarController::class, 'daftar'])->name('registerPost');
