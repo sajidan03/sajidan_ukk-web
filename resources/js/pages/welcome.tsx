@@ -226,40 +226,53 @@ const WelcomePage: React.FC<WelcomePageProps> = ({
 
     const renderHomeView = () => (
         <>
-            {/* HERO SECTION */}
-            <section className="w-full bg-[#3862a2] text-white overflow-hidden">
-                <div className="relative">
-                    <div className="absolute inset-0 bg-black/10"></div>
-                    <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-24">
-                        <div className="text-center">
-                            <h1 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-                                Selamat Datang di <br />
-                                <span className="text-white">
-                                    SA Market
-                                </span>
-                            </h1>
-                            <p className="text-lg lg:text-xl text-blue-100 mb-8 max-w-2xl mx-auto leading-relaxed">
-                                Temukan makanan dan minuman favorit dari berbagai toko di sekolah kami.
-                                Pesan via WhatsApp, lebih praktis dan cepat.
-                            </p>
-                            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                <button
-                                    onClick={() => setCurrentViewState('menu')}
-                                    className="bg-white text-[#3862a2] px-6 py-3 rounded-lg hover:bg-gray-100 transition duration-200 font-semibold flex items-center justify-center gap-2"
-                                >
-                                    <span>🍽️ Lihat Menu</span>
-                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                    </svg>
-                                </button>
-                                <button
-                                    onClick={() => setCurrentViewState('stores')}
-                                    className="bg-transparent text-white border border-white px-6 py-3 rounded-lg hover:bg-white/10 transition duration-200 font-semibold"
-                                >
-                                    🏪 Jelajahi Toko
-                                </button>
-                            </div>
+            {/* HERO SECTION DENGAN BACKGROUND IMAGE - DIKECILKAN */}
+            <section
+                className="w-full text-white overflow-hidden relative min-h-[70vh] flex items-center justify-center"
+                style={{
+                    backgroundImage: `linear-gradient(rgba(56, 98, 162, 0.8), rgba(56, 98, 162, 0.9)), url('/storage/assets/hero.jpg')`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                }}
+            >
+                <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+                    {/* Card yang lebih kecil dan proporsional */}
+                    <div className="backdrop-blur-sm bg-white/10 rounded-2xl p-6 lg:p-8 max-w-2xl mx-auto border border-white/20 shadow-xl">
+                        <h1 className="text-3xl lg:text-4xl font-bold mb-4 leading-tight drop-shadow-lg">
+                            Selamat Datang di{' '}
+                            <span className="text-white bg-[#3862a2] px-3 py-1 rounded-xl inline-block mt-2">
+                                SA Market
+                            </span>
+                        </h1>
+                        <p className="text-base lg:text-lg text-blue-100 mb-6 max-w-md mx-auto leading-relaxed drop-shadow-md">
+                            Temukan makanan dan minuman favorit dari berbagai toko di sekolah kami.
+                            Pesan via WhatsApp, lebih praktis dan cepat.
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                            <button
+                                onClick={() => setCurrentViewState('menu')}
+                                className="bg-white text-[#3862a2] px-6 py-3 rounded-lg hover:bg-gray-100 transition duration-200 font-semibold flex items-center justify-center gap-2 text-base shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                            >
+                                <span>🍽️ Lihat Menu</span>
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                            </button>
+                            <button
+                                onClick={() => setCurrentViewState('stores')}
+                                className="bg-transparent text-white border border-white px-6 py-3 rounded-lg hover:bg-white/20 transition duration-200 font-semibold text-base shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                            >
+                                🏪 Jelajahi Toko
+                            </button>
                         </div>
+                    </div>
+                </div>
+
+                {/* Scroll indicator */}
+                <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce">
+                    <div className="w-5 h-8 border-2 border-white rounded-full flex justify-center">
+                        <div className="w-1 h-2 bg-white rounded-full mt-2"></div>
                     </div>
                 </div>
             </section>

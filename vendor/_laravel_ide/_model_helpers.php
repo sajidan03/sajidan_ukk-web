@@ -7,12 +7,12 @@ namespace App\Models {
      *
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
-     * @property string $text
+     * @property string $pesan
      * @property string $nama
      * @property int $id
      * @method static \Illuminate\Database\Eloquent\Builder<Fax>|Fax whereId($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Fax>|Fax whereNama($value)
-     * @method static \Illuminate\Database\Eloquent\Builder<Fax>|Fax whereText($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Fax>|Fax wherePesan($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Fax>|Fax whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Fax>|Fax whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Fax>|Fax newModelQuery()
@@ -321,7 +321,7 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string $nama_gambar
-     * @property int $id_produk
+     * @property mixed $id_produk
      * @property int $id
      * @property-read \App\Models\Produk $produk
      * @method static \Illuminate\Database\Eloquent\Builder<GambarProduk>|GambarProduk whereId($value)
@@ -946,13 +946,13 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
      * @property string $url_wa
-     * @property int $id_toko
+     * @property mixed $id_toko
      * @property string $tanggal_upload
      * @property string $deskripsi
-     * @property int $stok
-     * @property int $harga
+     * @property mixed $stok
+     * @property mixed $harga
      * @property string $nama_produk
-     * @property int $id_kategori
+     * @property mixed $id_kategori
      * @property int $id
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\GambarProduk> $gambarProduk
      * @property-read int|null $gambarProduk_count
@@ -1274,9 +1274,10 @@ namespace App\Models {
      *
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
+     * @property mixed $status
      * @property string $alamat
      * @property string $kontak_toko
-     * @property int $id_user
+     * @property mixed $id_user
      * @property string $gambar
      * @property string $deskripsi
      * @property string $nama_toko
@@ -1291,6 +1292,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Toko>|Toko whereIdUser($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Toko>|Toko whereKontakToko($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Toko>|Toko whereAlamat($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Toko>|Toko whereStatus($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Toko>|Toko whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Toko>|Toko whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Toko>|Toko withAvailableProducts()
