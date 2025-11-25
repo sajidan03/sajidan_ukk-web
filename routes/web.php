@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MemberController;
+use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TokoController;
 use App\Http\Controllers\TokoSayaController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,9 @@ Route::get('/categories', [WelcomeController::class, 'categories'])->name('categ
 Route::get('/stores', [WelcomeController::class, 'stores'])->name('stores');
 Route::get('/toko/{id}', [WelcomeController::class, 'storeDetail'])->name('store.detail');
 Route::post('/fax', [WelcomeController::class, 'fax'])->name('fax');
+//daftar
+Route::get('/daftar', [RegisterController::class, 'index'])->name('registerView');
+Route::post('/daftar', [RegisterController::class, 'daftar'])->name('registerPost');
 //login
 Route::get('/login', [LoginController::class,'loginShow'])->name('login');
 Route::post('/login', [LoginController::class,'login'])->name('loginPost');

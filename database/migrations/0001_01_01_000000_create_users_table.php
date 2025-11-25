@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->string('kontak', 13)->nullable();
-            $table->enum('role', ['admin', 'member', 'user'])->default('user');
+            $table->enum('role', ['admin', 'member', 'user'])->default('member');
             $table->rememberToken();
             $table->timestamps();
         });

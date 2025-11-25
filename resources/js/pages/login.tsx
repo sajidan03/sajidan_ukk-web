@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import AuthLayout from '@/layouts/auth-layout';
 import { Head, useForm } from '@inertiajs/react';
-import { LoaderCircle, LogIn } from 'lucide-react';
+import { LoaderCircle, LogIn, Store } from 'lucide-react';
 import { useEffect } from 'react';
 
 interface LoginProps {
@@ -23,6 +23,10 @@ export default function Login({ status }: LoginProps) {
         post('/login', {
             onFinish: () => reset('password'),
         });
+    };
+
+    const handleRegister = () => {
+        window.location.href = '/daftar';
     };
 
     useEffect(() => {
@@ -77,7 +81,7 @@ export default function Login({ status }: LoginProps) {
 
                     <Button
                         type="submit"
-                        className="mt-4 w-full bg-[#30328b] hover:bg-[#26276f] text-white"
+                        className="w-full bg-[#30328b] hover:bg-[#26276f] text-white"
                         tabIndex={4}
                         disabled={processing}
                     >
@@ -87,6 +91,17 @@ export default function Login({ status }: LoginProps) {
                             <LogIn className="mr-2 h-4 w-4" />
                         )}
                         Log in
+                    </Button>
+
+                    <Button
+                        type="button"
+                        variant="outline"
+                        className="w-full text-[#30328b] border-[#30328b] hover:bg-[#30328b] hover:text-white"
+                        onClick={handleRegister}
+                        tabIndex={5}
+                    >
+                        <Store className="mr-2 h-4 w-4" />
+                        Daftar Pemilik Toko
                     </Button>
                 </div>
             </form>
