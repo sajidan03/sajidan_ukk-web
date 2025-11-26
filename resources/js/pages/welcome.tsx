@@ -167,39 +167,39 @@ const WelcomePage: React.FC<WelcomePageProps> = ({
         </section>
     );
 
-    const renderTestimonials = () => (
-        <section className="py-20 bg-gray-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-4">Apa Kata Pelanggan</h2>
-                    <p className="text-lg text-gray-600">Testimoni dari pelanggan setia kami</p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {[
-                        { name: "Andi Pratama", role: "Siswa", comment: "Makanannya enak-enak dan harganya terjangkau untuk siswa. Proses pesannya juga cepat!", avatar: "👨‍🎓" },
-                        { name: "Sari Dewi", role: "Guru", comment: "Sangat praktis untuk makan siang. Tidak perlu antri lama, tinggal pesan via WhatsApp.", avatar: "👩‍🏫" },
-                        { name: "Rizki Ahmad", role: "Siswa", comment: "Kimchi dan makanan Korea lainnya authentic banget rasanya. Recommended banget!", avatar: "👨‍🎓" }
-                    ].map((testimonial, index) => (
-                        <div key={index} className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
-                            <div className="flex items-center mb-4">
-                                <div className="w-12 h-12 bg-[#3862a2] rounded-xl flex items-center justify-center text-xl text-white">
-                                    {testimonial.avatar}
-                                </div>
-                                <div className="ml-4">
-                                    <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
-                                    <p className="text-[#3862a2] font-medium text-sm">{testimonial.role}</p>
-                                </div>
-                            </div>
-                            <p className="text-gray-600 leading-relaxed">"{testimonial.comment}"</p>
-                            <div className="flex text-yellow-400 mt-3">
-                                {"★".repeat(5)}
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
+    // const renderTestimonials = () => (
+    //     <section className="py-20 bg-gray-50">
+    //         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    //             <div className="text-center mb-16">
+    //                 <h2 className="text-3xl font-bold text-gray-900 mb-4">Apa Kata Pelanggan</h2>
+    //                 <p className="text-lg text-gray-600">Testimoni dari pelanggan setia kami</p>
+    //             </div>
+    //             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    //                 {[
+    //                     { name: "Andi Pratama", role: "Siswa", comment: "Makanannya enak-enak dan harganya terjangkau untuk siswa. Proses pesannya juga cepat!", avatar: "👨‍🎓" },
+    //                     { name: "Sari Dewi", role: "Guru", comment: "Sangat praktis untuk makan siang. Tidak perlu antri lama, tinggal pesan via WhatsApp.", avatar: "👩‍🏫" },
+    //                     { name: "Rizki Ahmad", role: "Siswa", comment: "Kimchi dan makanan Korea lainnya authentic banget rasanya. Recommended banget!", avatar: "👨‍🎓" }
+    //                 ].map((testimonial, index) => (
+    //                     <div key={index} className="bg-white rounded-xl shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+    //                         <div className="flex items-center mb-4">
+    //                             <div className="w-12 h-12 bg-[#3862a2] rounded-xl flex items-center justify-center text-xl text-white">
+    //                                 {testimonial.avatar}
+    //                             </div>
+    //                             <div className="ml-4">
+    //                                 <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
+    //                                 <p className="text-[#3862a2] font-medium text-sm">{testimonial.role}</p>
+    //                             </div>
+    //                         </div>
+    //                         <p className="text-gray-600 leading-relaxed">"{testimonial.comment}"</p>
+    //                         <div className="flex text-yellow-400 mt-3">
+    //                             {"★".repeat(5)}
+    //                         </div>
+    //                     </div>
+    //                 ))}
+    //             </div>
+    //         </div>
+    //     </section>
+    // );
 
     const renderStats = () => (
         <section className="py-20 bg-[#3862a2] text-white">
@@ -236,45 +236,39 @@ const WelcomePage: React.FC<WelcomePageProps> = ({
                     backgroundRepeat: 'no-repeat',
                 }}
             >
-                <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
-                    {/* Card yang lebih kecil dan proporsional */}
-                    <div className="backdrop-blur-sm bg-white/10 rounded-2xl p-6 lg:p-8 max-w-2xl mx-auto border border-white/20 shadow-xl">
-                        <h1 className="text-3xl lg:text-4xl font-bold mb-4 leading-tight drop-shadow-lg">
-                            Selamat Datang di{' '}
-                            <span className="text-white bg-[#3862a2] px-3 py-1 rounded-xl inline-block mt-2">
-                                SA Market
-                            </span>
-                        </h1>
-                        <p className="text-base lg:text-lg text-blue-100 mb-6 max-w-md mx-auto leading-relaxed drop-shadow-md">
-                            Temukan makanan dan minuman favorit dari berbagai toko di sekolah kami.
-                            Pesan via WhatsApp, lebih praktis dan cepat.
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                            <button
-                                onClick={() => setCurrentViewState('menu')}
-                                className="bg-white text-[#3862a2] px-6 py-3 rounded-lg hover:bg-gray-100 transition duration-200 font-semibold flex items-center justify-center gap-2 text-base shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                            >
-                                <span>🍽️ Lihat Menu</span>
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
-                            <button
-                                onClick={() => setCurrentViewState('stores')}
-                                className="bg-transparent text-white border border-white px-6 py-3 rounded-lg hover:bg-white/20 transition duration-200 font-semibold text-base shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                            >
-                                🏪 Jelajahi Toko
-                            </button>
-                        </div>
-                    </div>
-                </div>
+               <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+    <h1 className="text-3xl lg:text-4xl font-bold mb-4 leading-tight">
+        Selamat datang
+    </h1>
+    <p className="text-base lg:text-lg text-blue-100 mb-6 max-w-md mx-auto leading-relaxed">
+        Temukan makanan dan minuman favorit dari berbagai toko di sekolah kami.
+        Pesan via WhatsApp, lebih praktis dan cepat.
+    </p>
+    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+        <button
+            onClick={() => setCurrentViewState('menu')}
+            className="bg-white text-[#3862a2] px-6 py-3 rounded-lg hover:bg-gray-100 transition duration-200 font-semibold flex items-center justify-center gap-2 text-base shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+        >
+            <span>🍽️ Lihat Menu</span>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+        <button
+            onClick={() => setCurrentViewState('stores')}
+            className="bg-transparent text-white border border-white px-6 py-3 rounded-lg hover:bg-white/20 transition duration-200 font-semibold text-base shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+        >
+            🏪 Jelajahi Toko
+        </button>
+    </div>
+</div>
 
                 {/* Scroll indicator */}
-                <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce">
+                {/* <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce">
                     <div className="w-5 h-8 border-2 border-white rounded-full flex justify-center">
                         <div className="w-1 h-2 bg-white rounded-full mt-2"></div>
                     </div>
-                </div>
+                </div> */}
             </section>
 
             {/* POPULAR PRODUCTS SECTION */}
@@ -368,11 +362,10 @@ const WelcomePage: React.FC<WelcomePageProps> = ({
                 </div>
             </section>
 
-            {/* ADDITIONAL SECTIONS */}
             {renderFeaturedCategories()}
             {renderHowItWorks()}
             {renderStats()}
-            {renderTestimonials()}
+            {/* {renderTestimonials()} */}
         </>
     );
 
@@ -918,8 +911,8 @@ const WelcomePage: React.FC<WelcomePageProps> = ({
                             <h4 className="font-semibold mb-4">Kontak</h4>
                             <ul className="space-y-2 text-sm text-gray-400">
                                 <li>📍 Seoul Arts High School</li>
-                                <li>📞 +82 10-1234-5678</li>
-                                <li>✉️ hello@samarket.co.kr</li>
+                                <li>📞 +62 878-834-751-584</li>
+                                <li>✉️ sa-market@seoul.id</li>
                             </ul>
                         </div>
                         <div>

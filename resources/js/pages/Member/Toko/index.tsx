@@ -84,7 +84,7 @@ export default function KelolaToko() {
         {/* Content */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {toko ? (
-            <div className="flex flex-col lg:flex-row gap-8 justify-center">
+            <div className="flex flex-col lg:flex-row gap-8">
               {/* Kolom Kiri - Informasi Toko */}
               <div className="flex-1 max-w-2xl">
                 <div className="space-y-6">
@@ -155,7 +155,7 @@ export default function KelolaToko() {
 
                     <div className="aspect-square rounded-lg overflow-hidden border-2 border-dashed border-gray-300 bg-gray-50">
                       <img
-                        src={toko.gambar || '/storage/assets/default-store.jpg'}
+                        src={toko.gambar ? `/storage/assets/toko/${toko.gambar}` : '/storage/assets/default-store.jpg'}
                         alt={toko.nama_toko}
                         className="w-full h-full object-cover"
                         onError={(e) => {
