@@ -202,7 +202,7 @@ export default function KelolaToko() {
                     </div>
                   </div>
 
-                  {/* Statistik Toko */}
+                  {/* Statistik Toko
                   <div className="bg-white rounded-xl shadow-sm border p-6">
                     <h3 className="text-lg font-semibold text-gray-900 mb-4">Statistik Toko</h3>
 
@@ -227,7 +227,7 @@ export default function KelolaToko() {
                         <div className="text-sm text-purple-700">Total Penjualan</div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

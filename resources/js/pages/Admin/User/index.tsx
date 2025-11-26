@@ -42,11 +42,11 @@ export default function Dashboard() {
 
     {/* Tombol Export + Tambah User */}
     <div className="flex items-center gap-3">
-     <a href="/admin/user/export">
+     {/* <a href="/admin/user/export">
     <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
         Export
     </button>
-    </a>
+    </a> */}
       <Link
         href="/admin/user/tambah"
         className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
