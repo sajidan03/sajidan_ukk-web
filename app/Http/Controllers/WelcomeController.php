@@ -113,6 +113,7 @@ class WelcomeController extends Controller
         abort(404, 'Toko tidak ditemukan');
     }
 }
+
  public function fax(Request $request){
     $request->validate([
         'nama' => 'required|string',

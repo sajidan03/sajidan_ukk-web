@@ -558,7 +558,7 @@ const WelcomePage: React.FC<WelcomePageProps> = ({
                             </div>
                             <h3 className="font-semibold text-gray-900 mb-2">{kategori.nama_kategori}</h3>
                             <p className="text-gray-500 text-sm bg-gray-50 rounded-full px-3 py-1 inline-block">
-                                {kategori.produks_count || 0} produk tersedia
+                                {/* {kategori.produks_count || 0} produk tersedia */}
                             </p>
                         </div>
                     ))}
